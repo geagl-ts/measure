@@ -4,7 +4,8 @@ import { TextInput, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     input: {
         width: "90%",
-        padding: "3%",
+        paddingVertical: "3%",
+        paddingHorizontal: 15,
         fontSize: 20,
         fontWeight: "bold",
         borderWidth: 2,
@@ -22,12 +23,16 @@ const Input = ({
     defaultValue,
     bgColor,
     borderRadius,
+    margin,
+    isPassword,
+    textContentType,
 }) => {
     return (
         <TextInput
             placeholder={placeholder}
             style={[
                 styles.input,
+                margin ? { margin } : { margin: 0 },
                 bgColor
                     ? { backgroundColor: bgColor }
                     : { backgroundColor: "white" },
@@ -48,6 +53,8 @@ const Input = ({
             }
             value={input ? input[inputName] : defaultValue}
             onChangeText={subscribe ? subscribe(inputName) : onChange}
+            textContentType={textContentType ? textContentType : "emailAddress"}
+            secureTextEntry={isPassword ? isPassword : false}
         />
     );
 };

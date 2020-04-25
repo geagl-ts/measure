@@ -12,7 +12,7 @@ export default (initialState, onSubmit) => {
     };
 
     const handleSubmit = () => {
-        onSubmit;
+        onSubmit(inputs);
     };
 
     return {
