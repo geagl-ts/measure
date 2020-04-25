@@ -1,5 +1,5 @@
 import React, { Children, cloneElement } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
@@ -23,7 +23,13 @@ const FormContainer = ({ children, initialState, onSubmit }) => {
         });
     });
 
-    return <View style={styles.container}>{childrenWithProps}</View>;
+    return (
+        <View style={styles.container}>
+            <KeyboardAvoidingView behavior="height" style={{ width: "100%" }}>
+                {childrenWithProps}
+            </KeyboardAvoidingView>
+        </View>
+    );
 };
 
 export default FormContainer;
