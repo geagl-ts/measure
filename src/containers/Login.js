@@ -1,8 +1,18 @@
 import React from "react";
-import { Image } from "react-native";
-import { Input, FormContainer, Button, SectionForm } from "../components";
+import { FontAwesome } from "@expo/vector-icons";
+import { View, StyleSheet } from "react-native";
+import { Input, FormContainer, Button, Text } from "../components";
+import Icon from "../components/FormTest";
+import Link from "./Link";
 
 // * https://coolors.co/ebe9e9-f3f8f2-3581b8-fcb07e-dee2d6
+
+const styles = StyleSheet.create({
+    text: {
+        fontSize: 22,
+        color: "#2ba6ff",
+    },
+});
 
 const Login = () => {
     const initialState = {
@@ -16,49 +26,49 @@ const Login = () => {
 
     return (
         <FormContainer initialState={initialState} onSubmit={onSubmit}>
-            <SectionForm>
-                <Image
-                    source={{
-                        uri:
-                            "https://images.pexels.com/photos/2194261/pexels-photo-2194261.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                    }}
-                    style={{
-                        width: 200,
-                        height: 200,
-                        borderRadius: 100,
-                        margin: 15,
-                        resizeMode: "cover",
-                    }}
-                />
-            </SectionForm>
-            <SectionForm justifyContent={"flex-start"}>
-                <Input
-                    placeholder="correo electronico"
-                    margin={5}
-                    inputName={"email"}
-                    borderRadius={50}
-                    color={"#3581b8"}
-                    placeholderColor={"#3581b8"}
-                />
-                <Input
-                    placeholder="contraseña"
-                    margin={5}
-                    inputName={"password"}
-                    borderRadius={50}
-                    color={"#3581b8"}
-                    placeholderColor={"#3581b8"}
-                    isPassword={true}
-                    textContentType={"password"}
-                />
-                <Button
-                    margin={15}
-                    borderRadius={50}
-                    bgColor={"#3581b8"}
-                    title={"Iniciar sesion"}
-                    fontSize={20}
-                    letterSpacing={1}
-                />
-            </SectionForm>
+            <Icon
+                style={{
+                    width: 200,
+                    height: 130,
+                }}
+            />
+            <Text fontWeight="medium" otherStyles={styles.text}>
+                Correo electronico:
+            </Text>
+            <Input
+                placeholder="correo electronico"
+                margin={10}
+                inputName={"email"}
+                borderRadius={50}
+                color={"#2ba6ff"}
+                placeholderColor={"#79c5fc"}
+                shadow={true}
+            />
+            <Text fontWeight="medium" otherStyles={styles.text}>
+                Contraseña:
+            </Text>
+            <Input
+                placeholder="contraseña"
+                margin={10}
+                inputName={"password"}
+                borderRadius={50}
+                color={"#2ba6ff"}
+                placeholderColor={"#79c5fc"}
+                isPassword={true}
+                shadow={true}
+                textContentType={"password"}
+            />
+            <Button
+                margin={15}
+                borderRadius={50}
+                bgColor={"#2ba6ff"}
+                title={"Iniciar sesion"}
+                fontSize={18}
+                letterSpacing={1}
+                shadow={true}
+                iconName="md-log-in"
+            />
+            <Link color="#2ba6ff">crear una cuenta</Link>
         </FormContainer>
     );
 };
