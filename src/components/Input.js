@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
         fontFamily: "quicksand-light",
         borderWidth: 2,
         textAlignVertical: "top",
-        fontWeight: "700",
-    },
+        fontWeight: "700"
+    }
 });
 
 const Input = ({
@@ -31,10 +31,10 @@ const Input = ({
     isPassword,
     textContentType,
     borderColor,
-    shadow,
+    shadow
 }) => {
     const [isLoaded] = useFonts({
-        "quicksand-light": require("../../assets/fonts/Quicksand/light.ttf"),
+        "quicksand-light": require("../../assets/fonts/Quicksand/light.ttf")
     });
 
     if (!isLoaded) {
@@ -51,11 +51,11 @@ const Input = ({
                         : { backgroundColor: "white" },
                     color
                         ? {
-                              color,
+                              color
                           }
                         : {
                               backgroundColor: "white",
-                              borderColor: "#171717",
+                              borderColor: "#171717"
                           },
                     borderRadius ? { borderRadius } : { borderRadius: 0 },
                     borderColor
@@ -66,14 +66,14 @@ const Input = ({
                               shadowColor: "#000",
                               shadowOffset: {
                                   width: 0,
-                                  height: 4,
+                                  height: 4
                               },
                               shadowOpacity: 0.32,
                               shadowRadius: 5.46,
 
-                              elevation: 9,
+                              elevation: 9
                           }
-                        : {},
+                        : {}
                 ]}
                 placeholderTextColor={
                     placeholderColor ? placeholderColor : "#474747"
@@ -84,6 +84,7 @@ const Input = ({
                     textContentType ? textContentType : "emailAddress"
                 }
                 secureTextEntry={isPassword ? isPassword : false}
+                autoCapitalize="none"
             />
         );
     }

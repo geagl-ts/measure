@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const Login = ({ navigation }) => {
+const SignUp = ({ navigation }) => {
     const initialState = {
         email: "",
         password: ""
@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
     };
 
     const onSubmitLink = () => {
-        navigation.navigate("SignUp");
+        navigation.navigate("Login");
     };
 
     return (
@@ -68,17 +68,17 @@ const Login = ({ navigation }) => {
                 margin={15}
                 borderRadius={50}
                 bgColor={"#2ba6ff"}
-                title="Iniciar sesion"
+                title="Crear Cuenta"
                 fontSize={18}
                 letterSpacing={1}
                 shadow={true}
                 iconName="md-log-in"
             />
             <Link color="#2ba6ff" onPress={onSubmitLink}>
-                crear una cuenta
+                tengo una cuenta
             </Link>
         </FormContainer>
     );
 };
 
-export default Login;
+export default SignUp;

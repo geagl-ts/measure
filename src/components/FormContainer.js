@@ -1,5 +1,6 @@
 import React, { Children, cloneElement } from "react";
 import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { useForm } from "../hooks";
 
@@ -8,22 +9,22 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4,
+            height: 4
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
-        elevation: 9,
-    },
+        elevation: 9
+    }
 });
 
 const FormContainer = ({ children, initialState, onSubmit }) => {
     const { handleSubmit, subscribe, inputs } = useForm(initialState, onSubmit);
 
-    const childrenWithProps = Children.map(children, (child) => {
+    const childrenWithProps = Children.map(children, child => {
         return cloneElement(child, {
             handleSubmit,
             subscribe,
-            inputs,
+            inputs
         });
     });
 
@@ -32,8 +33,7 @@ const FormContainer = ({ children, initialState, onSubmit }) => {
             <View
                 style={{
                     backgroundColor: "#fff",
-                    height: "100%",
-                    // marginTop: "5.8%",
+                    height: "100%"
                 }}
             >
                 <KeyboardAvoidingView
@@ -43,19 +43,19 @@ const FormContainer = ({ children, initialState, onSubmit }) => {
                         height: "100%",
                         width: "100%",
                         justifyContent: "center",
-                        alignItems: "center",
+                        alignItems: "center"
                     }}
                 >
-                    <View
+                    <LinearGradient
+                        colors={["#2ba6ff", "#2bffed"]}
                         style={{
                             position: "absolute",
-                            backgroundColor: "#2ba6ff",
                             height: "30%",
                             width: "100%",
                             top: 0,
-                            zIndex: 0,
+                            zIndex: 0
                         }}
-                    ></View>
+                    ></LinearGradient>
                     <View
                         style={{
                             position: "absolute",
@@ -63,7 +63,7 @@ const FormContainer = ({ children, initialState, onSubmit }) => {
                             bottom: 0,
                             width: "100%",
                             height: "70%",
-                            zIndex: 0,
+                            zIndex: 0
                         }}
                     ></View>
                     <View
@@ -75,9 +75,9 @@ const FormContainer = ({ children, initialState, onSubmit }) => {
                                 backgroundColor: "#fff",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                borderRadius: 10,
+                                borderRadius: 10
                             },
-                            styles.shadow,
+                            styles.shadow
                         ]}
                     >
                         {childrenWithProps}

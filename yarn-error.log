@@ -1,11 +1,11 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-svg
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-linear-gradient@~8.1.0
 
 PATH: 
-  C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Java\jdk1.8.0_111\bin;D:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin\;C:\Program Files (x86)\Yarn\bin\;C:\Users\Miguel\AppData\Roaming\nvm;C:\Program Files\nodejs;;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Miguel\AppData\Roaming\npm;C:\Python27;C:\Program Files\PostgreSQL\10\bin;C:\Users\Miguel\AppData\Local\Yarn\bin;C:\Users\Miguel\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\heroku\bin;C:\Program Files\PostgreSQL\10\bin;C:\Users\Miguel\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\MongoDB\Server\4.2\bin;C:\Users\Miguel\AppData\Local\Android\Sdk\platform-tools;E:\Program Files(x86)\Vim\vim81;E:\Program Files\JetBrains\DataGrip 2019.3.3\bin;C:\Users\Miguel\AppData\Local\Android\Sdk\emulator;C:\Program Files\PostgreSQL\10\bin;C:\Users\Miguel\AppData\Local\GitHubDesktop\bin
+  C:\src\terminal\bin;C:\src\terminal\vendor\bin;C:\src\terminal\vendor\conemu-maximus5\ConEmu\Scripts;C:\src\terminal\vendor\conemu-maximus5;C:\src\terminal\vendor\conemu-maximus5\ConEmu;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.8.0_231\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\heroku\bin;C:\Program Files (x86)\Yarn\bin\;C:\Users\geagl\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\PostgreSQL\10\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\geagl\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\geagl\AppData\Local\Programs\Python\Python38-32\;C:\Users\geagl\AppData\Local\Microsoft\WindowsApps;C:\Users\geagl\AppData\Roaming\npm;C:\Users\geagl\AppData\Local\Yarn\bin\;C:\Users\geagl\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\MongoDB\Server\4.2\bin;C:\Users\geagl\AppData\Local\Yarn\bin;C:\Users\geagl\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\geagl\AppData\Local\hyper\app-3.0.2\resources\bin;C:\Program Files\JetBrains\DataGrip 2019.3.3\bin;C:\Program Files\PostgreSQL\10\bin;C:\src\sqlite3;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\src\terminal
 
 Yarn version: 
-  1.19.2
+  1.21.1
 
 Node version: 
   12.9.0
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'E:\Miguel\Documents\Proyects\web projects\React Native Applications\measure\measure\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\geagl\Documents\dev\GitHub\measure\node_modules\@babel\generator\node_modules\.bin'
 
 npm manifest: 
   {
