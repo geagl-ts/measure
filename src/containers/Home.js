@@ -1,7 +1,9 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Input, Card } from "../components";
+
+const medidas = require("../../assets/Data/Medidas");
 
 const styles = StyleSheet.create({
     container: {
@@ -21,6 +23,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: "flex-start",
         alignItems: "center",
+        paddingVertical: 5,
     },
     shadow: {
         shadowColor: "#000",
@@ -32,9 +35,25 @@ const styles = StyleSheet.create({
         shadowRadius: 5.46,
         elevation: 9,
     },
+    scroll: {
+        width: "100%",
+    },
+    scrollContent: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    cardContainer: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingVertical: 5,
+        marginVertical: 10,
+    },
 });
 
 const Home = () => {
+    const [clientes, setClientes] = useState(medidas.data);
+
     const onPressLink = () => {
         navigation.navigate("AuthLoading");
     };
@@ -58,7 +77,26 @@ const Home = () => {
                 />
             </View>
             <View style={[styles.content, styles.shadow]}>
-                <Card />
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.scrollContent}>
+                        {clientes.map((cliente) => {
+                            return (
+                                <View
+                                    style={styles.cardContainer}
+                                    key={cliente.id}
+                                >
+                                    <Card
+                                        data={cliente}
+                                        shadow={true}
+                                        onDelete={() => {
+                                            alert("Eliminar");
+                                        }}
+                                    />
+                                </View>
+                            );
+                        })}
+                    </View>
+                </ScrollView>
             </View>
         </LinearGradient>
     );
