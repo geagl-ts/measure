@@ -9,13 +9,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    loading: {
+    aboutContainer: {
         backgroundColor: "#fff",
-        width: "80%",
-        height: "80%",
+        width: "90%",
+        height: "90%",
         borderRadius: 10,
         justifyContent: "flex-start",
         alignItems: "center",
+        marginTop: "5%",
     },
     shadow: {
         shadowColor: "#000",
@@ -47,7 +48,7 @@ const About = ({ navigation }) => {
             colors={["#2ba6ff", "#2bffed"]}
             style={styles.container}
         >
-            <View style={[styles.loading, styles.shadow]}>
+            <View style={[styles.aboutContainer, styles.shadow]}>
                 <Image
                     source={require("../../assets/signin.png")}
                     style={styles.image}
@@ -62,7 +63,7 @@ const About = ({ navigation }) => {
                 >
                     <Link
                         fontWeight="bold"
-                        fontSize={21}
+                        fontSize={20}
                         color="#2ba6ff"
                         onPress={onPressLink}
                         uppercase={true}
