@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
     inputContent: {
         width: "100%",
         alignItems: "center",
-        marginTop: 40,
+        marginTop: 46,
         marginBottom: 10,
     },
     content: {
         backgroundColor: "#fff",
         width: "90%",
-        height: "70%",
+        height: "80%",
         borderRadius: 10,
         justifyContent: "flex-start",
         alignItems: "center",
