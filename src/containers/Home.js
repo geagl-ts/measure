@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Input } from "../components";
+import { Input, Card } from "../components";
 
 const styles = StyleSheet.create({
     container: {
@@ -57,7 +57,9 @@ const Home = () => {
                     color="#2ba6ff"
                 />
             </View>
-            <View style={[styles.content, styles.shadow]}></View>
+            <View style={[styles.content, styles.shadow]}>
+                <Card />
+            </View>
         </LinearGradient>
     );
 };
