@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
     };
 
     const onSubmit = (values) => {
-        navigation.navigate("About");
+        navigation.navigate("Home");
     };
 
     const onSubmitLink = () => {
