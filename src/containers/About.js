@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     loading: {
         backgroundColor: "#fff",
@@ -15,26 +15,26 @@ const styles = StyleSheet.create({
         height: "80%",
         borderRadius: 10,
         justifyContent: "flex-start",
-        alignItems: "center"
+        alignItems: "center",
     },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4
+            height: 4,
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
-        elevation: 9
+        elevation: 9,
     },
     image: {
         width: 300,
         height: 180,
-        resizeMode: "contain"
+        resizeMode: "contain",
     },
     text: {
-        fontSize: 22
-    }
+        fontSize: 22,
+    },
 });
 
 const About = ({ navigation }) => {
@@ -52,14 +52,25 @@ const About = ({ navigation }) => {
                     source={require("../../assets/signin.png")}
                     style={styles.image}
                 />
-                <Link
-                    fontWeight="bold"
-                    fontSize={26}
-                    color="#2ba6ff"
-                    onPress={onPressLink}
+                <View
+                    style={{
+                        width: "100%",
+                        height: "60%",
+                        alignItems: "center",
+                        justifyContent: "flex-end",
+                    }}
                 >
-                    Cerrar sesion
-                </Link>
+                    <Link
+                        fontWeight="bold"
+                        fontSize={21}
+                        color="#2ba6ff"
+                        onPress={onPressLink}
+                        uppercase={true}
+                        letterSpacing={1}
+                    >
+                        Cerrar sesion
+                    </Link>
+                </View>
             </View>
         </LinearGradient>
     );

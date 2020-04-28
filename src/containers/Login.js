@@ -8,23 +8,23 @@ import Link from "./Link";
 const styles = StyleSheet.create({
     text: {
         fontSize: 22,
-        color: "#2ba6ff"
+        color: "#2ba6ff",
     },
     image: {
         width: "80%",
         height: 150,
         resizeMode: "contain",
-        marginBottom: 15
-    }
+        marginBottom: 15,
+    },
 });
 
 const Login = ({ navigation }) => {
     const initialState = {
         email: "",
-        password: ""
+        password: "",
     };
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         navigation.navigate("About");
     };
 
@@ -75,7 +75,7 @@ const Login = ({ navigation }) => {
                 iconName="md-log-in"
             />
             <Link color="#2ba6ff" onPress={onSubmitLink} underline={true}>
-                crear una cuenta
+                no tienes una cuenta?
             </Link>
         </FormContainer>
     );

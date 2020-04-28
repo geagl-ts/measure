@@ -8,7 +8,9 @@ const Link = ({
     fontSize,
     onPress,
     underline,
-    fontWeight
+    fontWeight,
+    uppercase,
+    letterSpacing,
 }) => {
     return (
         <TouchableOpacity
@@ -20,10 +22,11 @@ const Link = ({
             <Text
                 fontWeight={fontWeight ? fontWeight : "regular"}
                 otherStyles={{
-                    textTransform: "lowercase",
+                    textTransform: uppercase ? "uppercase" : "lowercase",
                     color: color ? color : "red",
                     fontSize: fontSize ? fontSize : 20,
-                    textDecorationLine: underline ? "underline" : "none"
+                    textDecorationLine: underline ? "underline" : "none",
+                    letterSpacing: letterSpacing ? letterSpacing : 0,
                 }}
             >
                 {children}

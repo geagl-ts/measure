@@ -8,23 +8,23 @@ import Link from "./Link";
 const styles = StyleSheet.create({
     text: {
         fontSize: 22,
-        color: "#2ba6ff"
+        color: "#2ba6ff",
     },
     image: {
         width: "80%",
         height: 150,
         resizeMode: "contain",
-        marginBottom: 15
-    }
+        marginBottom: 15,
+    },
 });
 
 const SignUp = ({ navigation }) => {
     const initialState = {
         email: "",
-        password: ""
+        password: "",
     };
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         console.log(values);
     };
 
@@ -74,8 +74,8 @@ const SignUp = ({ navigation }) => {
                 shadow={true}
                 iconName="md-log-in"
             />
-            <Link color="#2ba6ff" onPress={onSubmitLink}>
-                tengo una cuenta
+            <Link underline={true} color="#2ba6ff" onPress={onSubmitLink}>
+                tienes una cuenta?
             </Link>
         </FormContainer>
     );
