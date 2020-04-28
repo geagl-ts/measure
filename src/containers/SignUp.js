@@ -29,7 +29,7 @@ const SignUp = ({ navigation }) => {
     };
 
     const onSubmitLink = () => {
-        navigation.navigate("Login");
+        navigation.push("Login");
     };
 
     return (

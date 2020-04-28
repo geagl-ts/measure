@@ -25,11 +25,11 @@ const Login = ({ navigation }) => {
     };
 
     const onSubmit = values => {
-        console.log(values);
+        navigation.navigate("About");
     };
 
     const onSubmitLink = () => {
-        navigation.navigate("SignUp");
+        navigation.push("SignUp");
     };
 
     return (
@@ -74,7 +74,7 @@ const Login = ({ navigation }) => {
                 shadow={true}
                 iconName="md-log-in"
             />
-            <Link color="#2ba6ff" onPress={onSubmitLink}>
+            <Link color="#2ba6ff" onPress={onSubmitLink} underline={true}>
                 crear una cuenta
             </Link>
         </FormContainer>

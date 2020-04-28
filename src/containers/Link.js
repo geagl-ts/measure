@@ -2,7 +2,14 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Text } from "../components";
 
-const Link = ({ children, color, fontSize, onPress }) => {
+const Link = ({
+    children,
+    color,
+    fontSize,
+    onPress,
+    underline,
+    fontWeight
+}) => {
     return (
         <TouchableOpacity
             activeOpacity={0.4}
@@ -11,12 +18,12 @@ const Link = ({ children, color, fontSize, onPress }) => {
             }}
         >
             <Text
-                fontWeight="regular"
+                fontWeight={fontWeight ? fontWeight : "regular"}
                 otherStyles={{
                     textTransform: "lowercase",
                     color: color ? color : "red",
                     fontSize: fontSize ? fontSize : 20,
-                    textDecorationLine: "underline"
+                    textDecorationLine: underline ? "underline" : "none"
                 }}
             >
                 {children}
