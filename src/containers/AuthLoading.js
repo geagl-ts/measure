@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         flex: 1,
-        backgroundColor: "#2ba6ff"
+        backgroundColor: "#2ba6ff",
     },
     loading: {
         backgroundColor: "#fff",
@@ -16,31 +16,30 @@ const styles = StyleSheet.create({
         height: "75%",
         borderRadius: 10,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4
+            height: 4,
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
-        elevation: 9
+        elevation: 9,
     },
     text: {
         fontSize: 22,
         color: "#2ba6ff",
         textTransform: "uppercase",
         letterSpacing: 1,
-        textAlign: "center"
+        textAlign: "center",
     },
     image: {
         width: "79%",
         height: 130,
         resizeMode: "contain",
-        backgroundColor: "#2ba6ff"
-    }
+    },
 });
 
 const AuthLoading = ({ navigation }) => {

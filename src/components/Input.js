@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
         fontFamily: "quicksand-light",
         borderWidth: 2,
         textAlignVertical: "top",
-        fontWeight: "700",
     },
     shadow: {
         shadowColor: "#000",

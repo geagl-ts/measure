@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Input, Card } from "../components";
+import { Input } from "../components";
+import Card from "./Card";
 
 const medidas = require("../../assets/Data/Medidas");
 
