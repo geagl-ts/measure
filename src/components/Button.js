@@ -31,6 +31,8 @@ const Button = ({
     shadow,
     iconName,
     iconColor,
+    iconSize,
+    elevation,
 }) => {
     const [isLoaded] = useFonts({
         "quicksand-bold": require("../../assets/fonts/Quicksand/bold.ttf"),
@@ -61,6 +63,7 @@ const Button = ({
                               elevation: 9,
                           }
                         : {},
+                    elevation ? { elevation } : { elevation: 9 },
                 ]}
                 onPress={handleSubmit}
                 activeOpacity={0.5}
@@ -80,7 +83,7 @@ const Button = ({
                 <View style={{ marginLeft: 10 }}>
                     <Ionicons
                         name={iconName ? iconName : "md-log-in"}
-                        size={35}
+                        size={iconSize ? iconSize : 35}
                         color={iconColor ? iconColor : "#fff"}
                     />
                 </View>

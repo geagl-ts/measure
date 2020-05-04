@@ -106,7 +106,7 @@ const BotonDeNuevoCliente = ({ onSubmit }) => {
     );
 };
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const [clientes, setClientes] = useState(medidas.data);
 
     const onPressLink = () => {
@@ -120,7 +120,7 @@ const Home = () => {
         >
             <BotonDeNuevoCliente
                 onSubmit={() => {
-                    Alert.alert("Hola", "Formulario de nuevo cliente");
+                    navigation.navigate("NuevoCliente");
                 }}
             />
             <View style={styles.inputContent}>

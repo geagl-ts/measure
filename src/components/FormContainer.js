@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const FormContainer = ({ children, initialState, onSubmit }) => {
+const FormContainer = ({ children, initialState, onSubmit, paddingNone }) => {
     const { handleSubmit, subscribe, inputs } = useForm(initialState, onSubmit);
 
     const childrenWithProps = Children.map(children, (child) => {
@@ -76,8 +76,10 @@ const FormContainer = ({ children, initialState, onSubmit }) => {
                                 justifyContent: "center",
                                 alignItems: "center",
                                 borderRadius: 10,
-                                paddingBottom: 20,
                             },
+                            paddingNone
+                                ? { padding: 0 }
+                                : { paddingBottom: 20 },
                             styles.shadow,
                         ]}
                     >

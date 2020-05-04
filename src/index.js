@@ -1,5 +1,12 @@
 import React from "react";
-import { Login, About, Home, SignUp, AuthLoading } from "./containers";
+import {
+    Login,
+    About,
+    Home,
+    SignUp,
+    AuthLoading,
+    NuevoCliente,
+} from "./containers";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -66,6 +73,7 @@ const StackNavigator = () => {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="HomeNavigator" component={BottomNavigator} />
+            <Stack.Screen name="NuevoCliente" component={NuevoCliente} />
         </Stack.Navigator>
     );
 };
