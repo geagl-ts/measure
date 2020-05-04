@@ -47,7 +47,7 @@ const AuthLoading = ({ navigation }) => {
         const unsubscribe = navigation.addListener("focus", () => {
             setTimeout(() => {
                 navigation.navigate("Login");
-            }, 5000);
+            }, 1000);
         });
 
         return unsubscribe;

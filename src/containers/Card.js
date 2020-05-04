@@ -1,12 +1,7 @@
 import React from "react";
-import {
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    Text,
-    ScrollView,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import ModalUserData from "./ModalUserData";
 
 const styles = StyleSheet.create({
     container: {
@@ -24,10 +19,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
         elevation: 7,
-    },
-    text: {
-        color: "#2ba6ff",
-        marginHorizontal: 5,
     },
     deleteIcon: {
         position: "relative",
@@ -52,22 +43,7 @@ const Card = ({ shadow, onDelete, data }) => {
                     { justifyContent: "center", alignItems: "center" },
                 ]}
             >
-                <TouchableOpacity style={{ width: "100%" }} activeOpacity={0.5}>
-                    <Text
-                        style={[
-                            styles.text,
-                            {
-                                fontSize: 30,
-                                fontWeight: "bold",
-                                marginTop: 2,
-                                textAlign: "center",
-                            },
-                        ]}
-                    >
-                        {data.name}
-                    </Text>
-                    <ExtraData title="Telefono" description="9711053131" />
-                </TouchableOpacity>
+                <ModalUserData data={data} />
             </View>
             <View style={styles.botonera}>
                 <View
@@ -94,23 +70,6 @@ const ButtonIcon = ({ children, styles, onSubmit }) => {
         <TouchableOpacity onPress={onSubmit} style={styles} activeOpacity={0.6}>
             {children}
         </TouchableOpacity>
-    );
-};
-
-const ExtraData = ({ title, description, dosPuntos }) => {
-    return (
-        <View
-            style={{
-                marginTop: 4,
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <Text style={[styles.text, { fontSize: 22, fontWeight: "700" }]}>
-                {title} {dosPuntos ? ":" : ""}
-            </Text>
-            <Text style={[styles.text, { fontSize: 20 }]}>{description}</Text>
-        </View>
     );
 };
 
