@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 46,
         marginBottom: 10,
+        zIndex: 1,
+        elevation: 9,
     },
     content: {
         position: "absolute",
