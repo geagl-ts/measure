@@ -13,7 +13,7 @@ const inputStyles = StyleSheet.create({
     container: {},
     text: {
         color: "#2ba6ff",
-        fontSize: 19,
+        fontSize: 23,
         fontWeight: "bold",
         textTransform: "uppercase",
         letterSpacing: 1,
@@ -23,7 +23,7 @@ const inputStyles = StyleSheet.create({
         color: "#2ba6ff",
         paddingVertical: 4,
         paddingHorizontal: 10,
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: "bold",
         marginHorizontal: 20,
         borderBottomColor: "#2ba6ff",
