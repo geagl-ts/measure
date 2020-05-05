@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 
 import { FormContainer, Button } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
-
-import { Picker } from "@react-native-community/picker";
+import RadioForm from "react-native-simple-radio-button";
 
 const Botonera = ({ children }) => (
     <View style={{ ...styles.botoneraContainer }}>{children}</View>
@@ -33,6 +32,14 @@ const inputStyles = StyleSheet.create({
     },
     warning: { color: "coral", fontSize: 16 },
 });
+
+const radioButtonStyles = StyleSheet.create({
+    container: { marginLeft: 20, marginTop: 20 },
+});
+
+const ContenedorDeRadioButtons = ({ children }) => {
+    return <View style={{ ...radioButtonStyles.container }}>{children}</View>;
+};
 
 const Input = ({
     titulo,
@@ -106,8 +113,17 @@ const ViewHorizontal = ({ children }) => {
     return <View style={{ ...viewHorizontal.container }}>{children}</View>;
 };
 
+var radio_props = [
+    { label: "Normal", value: "Normal" },
+    { label: "Principal", value: "Principal" },
+];
+
 const NuevoCliente = () => {
-    const [pickerValue, setPickerValue] = React.useState({ valor: "java" });
+    const [radioButtomValue, setRadioButtomValue] = React.useState("Normal");
+
+    const onPress = (value) => {
+        setRadioButtomValue(value);
+    };
 
     return (
         <FormContainer paddingNone={true}>
@@ -121,7 +137,25 @@ const NuevoCliente = () => {
                     customStyles={{ marginTop: 20 }}
                     keyboardType="numeric"
                 />
-                <Text style={{ ...inputStyles.text, marginTop: 20 }}>
+                <ContenedorDeRadioButtons>
+                    <RadioForm
+                        radio_props={radio_props}
+                        initial={radioButtomValue}
+                        formHorizontal={true}
+                        onPress={onPress}
+                        buttonColor={"#aaa"}
+                        labelColor={"#aaa"}
+                        labelStyle={{
+                            marginRight: 20,
+                            fontWeight: "bold",
+                            fontSize: 18,
+                        }}
+                        buttonSize={10}
+                        selectedButtonColor={"#2ba6ff"}
+                        selectedLabelColor={"#2ba6ff"}
+                    />
+                </ContenedorDeRadioButtons>
+                <Text style={{ ...inputStyles.text, marginTop: 10 }}>
                     Medidas
                 </Text>
                 <ViewHorizontal>
@@ -139,20 +173,6 @@ const NuevoCliente = () => {
                         keyboardType="numeric"
                     />
                 </ViewHorizontal>
-                {/* <Picker
-                    selectedValue={pickerValue.valor}
-                    style={{
-                        height: 60,
-                        width: "90%",
-                        color: "#2ba6ff",
-                    }}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setPickerValue({ valor: itemValue })
-                    }
-                >
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                </Picker> */}
             </ScrollView>
             <Botonera>
                 <Button
@@ -177,14 +197,14 @@ export default NuevoCliente;
 const styles = StyleSheet.create({
     scroll: {
         width: "100%",
-        height: "85%",
+        height: "80%",
         position: "absolute",
         top: 0,
     },
     botoneraContainer: {
         position: "absolute",
         width: "100%",
-        height: "15%",
+        height: "20%",
         bottom: 0,
         justifyContent: "center",
         alignItems: "center",
