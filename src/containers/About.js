@@ -74,58 +74,94 @@ const About = ({ navigation }) => {
 
     if (loading) {
         return (
-            <LinearGradient
-                colors={["#2ba6ff", "#2bffed"]}
-                style={styles.container}
-            >
-                <View style={[styles.aboutContainer, styles.shadow]}>
-                    <Image
-                        source={require("../../assets/signin.png")}
-                        style={styles.image}
-                    />
-                </View>
-            </LinearGradient>
+            <MainContainer>
+                <AfterMainContainer
+                    otherStyles={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <ImagenContainer />
+                </AfterMainContainer>
+            </MainContainer>
         );
     } else {
         const { email } = data.getUser.userData;
 
         return (
-            <LinearGradient
-                colors={["#2ba6ff", "#2bffed"]}
-                style={styles.container}
-            >
-                <View style={[styles.aboutContainer, styles.shadow]}>
-                    <Image
-                        source={require("../../assets/signin.png")}
-                        style={styles.image}
-                    />
+            <MainContainer>
+                <AfterMainContainer>
+                    <ImagenContainer />
+                    {/* datos del usuario */}
                     <Title label="Correo Electronico">{email}</Title>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: "55%",
-                            alignItems: "center",
-                            justifyContent: "flex-end",
-                            marginBottom: 25,
-                        }}
-                    >
-                        <Link
-                            fontWeight="bold"
-                            fontSize={20}
-                            color="#2ba6ff"
-                            onPress={onPressLink}
-                            uppercase={true}
-                            letterSpacing={1}
-                        >
-                            Cerrar sesion
-                        </Link>
-                    </View>
-                </View>
-            </LinearGradient>
+                    {/* contenedor del boton de cerrar sesion */}
+                    <CerrarSesionContainer onSubmit={onPressLink} />
+                </AfterMainContainer>
+            </MainContainer>
         );
     }
 };
 
+const MainContainer = ({ children }) => {
+    return (
+        <LinearGradient
+            colors={["#2ba6ff", "#2bffed"]}
+            style={styles.container}
+        >
+            {children}
+        </LinearGradient>
+    );
+};
+
+const AfterMainContainer = ({ children, otherStyles }) => {
+    return (
+        <View
+            style={{
+                ...styles.aboutContainer,
+                ...styles.shadow,
+                ...otherStyles,
+            }}
+        >
+            {children}
+        </View>
+    );
+};
+
+const ImagenContainer = () => {
+    return (
+        <Image
+            source={require("../../assets/signin.png")}
+            style={styles.image}
+        />
+    );
+};
+
+const CerrarSesionContainer = ({ onSubmit }) => {
+    return (
+        <View
+            style={{
+                width: "100%",
+                height: "55%",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                marginBottom: 25,
+            }}
+        >
+            <Link
+                fontWeight="bold"
+                fontSize={20}
+                color="#2ba6ff"
+                onPress={onSubmit}
+                uppercase={true}
+                letterSpacing={1}
+            >
+                Cerrar sesion
+            </Link>
+        </View>
+    );
+};
+
+//estilos de los titulos
 const titleStyles = StyleSheet.create({
     container: {
         width: "90%",
@@ -136,6 +172,7 @@ const titleStyles = StyleSheet.create({
     },
 });
 
+//compomente para mostrar un item y su descripcion
 const Title = ({ label, children }) => {
     return (
         <View style={{ ...styles.container }}>
