@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, Image, AsyncStorage } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text } from "../components/";
 
@@ -43,11 +43,19 @@ const styles = StyleSheet.create({
 });
 
 const AuthLoading = ({ navigation }) => {
+    const verifySession = async () => {
+        return await AsyncStorage.getItem("Token");
+    };
+
     useEffect(() => {
-        const unsubscribe = navigation.addListener("focus", () => {
-            setTimeout(() => {
+        const unsubscribe = navigation.addListener("focus", async () => {
+            let tokenSession = await verifySession();
+
+            if (tokenSession) {
+                navigation.navigate("HomeNavigator");
+            } else {
                 navigation.navigate("Login");
-            }, 1000);
+            }
         });
 
         return unsubscribe;
