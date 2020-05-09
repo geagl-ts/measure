@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, AsyncStorage } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Link from "../containers/Link";
 
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
 });
 
 const About = ({ navigation }) => {
-    const onPressLink = () => {
+    const onPressLink = async () => {
+        await AsyncStorage.removeItem("Token");
         navigation.navigate("AuthLoading");
     };
 
