@@ -26,7 +26,7 @@ const ModalDeCliente = ({ data }) => {
                         <Header>Telefonos</Header>
                         <ListaTelefonos telefonos={data.phones} />
                         <Header>Medidas</Header>
-                        <ListaMedidas medidas={data.medidas} />
+                        <ListaMedidas medidas={data.measures} />
                     </ContenedorDeDatos>
                 </VistaDelModal>
             </Modal>
@@ -90,37 +90,85 @@ const BotonDeSalir = ({ onSubmit }) => (
     </TouchableOpacity>
 );
 
-const VistaAntesDelModal = ({ data, onSubmit }) => (
-    <TouchableOpacity
-        style={{ width: "100%" }}
-        activeOpacity={0.5}
-        onPress={onSubmit}
-    >
-        <Text
-            style={[
-                { color: "#2ba6ff", marginHorizontal: 5 },
-                {
-                    fontSize: 30,
-                    fontWeight: "bold",
-                    marginTop: 2,
-                    textAlign: "center",
-                },
-            ]}
-        >
-            {data.name}
-        </Text>
-        <ExtraData title="Telefono" description="9711053131" />
-    </TouchableOpacity>
-);
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+
+const MAIN_PHONE = gql`
+    query getMainPhone($clientId: ID!) {
+        getMainPhone(clientId: $clientId) {
+            phone {
+                phone
+            }
+        }
+    }
+`;
+
+const VistaAntesDelModal = ({ data, onSubmit }) => {
+    const { loading, data: mainPhone } = useQuery(MAIN_PHONE, {
+        variables: { clientId: data.id },
+    });
+
+    if (loading) {
+        return (
+            <TouchableOpacity
+                style={{ width: "100%" }}
+                activeOpacity={0.5}
+                onPress={onSubmit}
+            >
+                <Text
+                    style={[
+                        { color: "#2ba6ff", marginHorizontal: 5 },
+                        {
+                            fontSize: 30,
+                            fontWeight: "bold",
+                            marginTop: 2,
+                            textAlign: "center",
+                        },
+                    ]}
+                >
+                    {data.name}
+                </Text>
+            </TouchableOpacity>
+        );
+    } else {
+        const { getMainPhone } = mainPhone;
+
+        return (
+            <TouchableOpacity
+                style={{ width: "100%" }}
+                activeOpacity={0.5}
+                onPress={onSubmit}
+            >
+                <Text
+                    style={[
+                        { color: "#2ba6ff", marginHorizontal: 5 },
+                        {
+                            fontSize: 30,
+                            fontWeight: "bold",
+                            marginTop: 2,
+                            textAlign: "center",
+                        },
+                    ]}
+                >
+                    {data.name}
+                </Text>
+                <ExtraData
+                    title="Telefono"
+                    description={getMainPhone.phone.phone}
+                />
+            </TouchableOpacity>
+        );
+    }
+};
 
 const ListaTelefonos = ({ telefonos }) => {
     const Items = ({ item }) => (
-        <>
+        <View key={item.id}>
             <ContentItemList bold={true}>{item.phone}</ContentItemList>
             <ContentItemList>
                 {item.isMain ? "Principal" : "Normal"}
             </ContentItemList>
-        </>
+        </View>
     );
 
     return (
@@ -132,15 +180,15 @@ const ListaTelefonos = ({ telefonos }) => {
 
 const ListaMedidas = ({ medidas }) => {
     const Items = ({ item }) => (
-        <>
+        <View key={item.id}>
             <ContentItemList bold={true}>
-                Alt: {item.medida.altura} {"\t\t"}
-                Cin:{item.medida.cintura}
+                Alt: {item.height} {"\t\t"}
+                Cin:{item.waist}
             </ContentItemList>
             <ContentItemList>
                 {item.isMain ? "Actual" : "Anterior"}
             </ContentItemList>
-        </>
+        </View>
     );
 
     return (

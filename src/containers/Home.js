@@ -5,13 +5,38 @@ import {
     ScrollView,
     Text,
     TouchableOpacity,
-    Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Input } from "../components";
 import Card from "./Card";
 
-const medidas = require("../../assets/Data/Medidas");
+//data of graphql
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+
+const GET_USER = gql`
+    query {
+        getUser {
+            userData {
+                id
+                clients {
+                    id
+                    name
+                    measures {
+                        id
+                        height
+                        waist
+                    }
+                    phones {
+                        id
+                        phone
+                        isMain
+                    }
+                }
+            }
+        }
+    }
+`;
 
 const styles = StyleSheet.create({
     container: {
@@ -109,59 +134,76 @@ const BotonDeNuevoCliente = ({ onSubmit }) => {
 };
 
 const Home = ({ navigation }) => {
-    const [clientes, setClientes] = useState(medidas.data);
+    const [clientes, setClientes] = useState([]);
+    const { loading, data } = useQuery(GET_USER);
+
+    React.useEffect(() => {
+        if (data) {
+            const { getUser } = data;
+            setClientes(getUser.userData.clients);
+        }
+    }, [data]);
 
     const onPressLink = () => {
         navigation.navigate("AuthLoading");
     };
 
-    return (
-        <LinearGradient
-            colors={["#2ba6ff", "#2bffed"]}
-            style={styles.container}
-        >
-            <BotonDeNuevoCliente
-                onSubmit={() => {
-                    navigation.navigate("NuevoCliente");
-                }}
-            />
-            <View style={styles.inputContent}>
-                <Input
-                    bgColor="#fff"
-                    borderRadius={50}
-                    shadow={true}
-                    placeholder="nombre"
-                    placeholderColor="#cacaca"
-                    width="90%"
-                    paddingVertical={9}
-                    paddingHorizontal={20}
-                    color="#2ba6ff"
+    if (loading) {
+        return (
+            <LinearGradient
+                colors={["#2ba6ff", "#2bffed"]}
+                style={styles.container}
+            ></LinearGradient>
+        );
+    } else {
+        return (
+            <LinearGradient
+                colors={["#2ba6ff", "#2bffed"]}
+                style={styles.container}
+            >
+                <BotonDeNuevoCliente
+                    onSubmit={() => {
+                        navigation.navigate("NuevoCliente");
+                    }}
                 />
-            </View>
-            <View style={{ ...styles.content, ...styles.shadow }}>
-                <ScrollView style={styles.scroll}>
-                    <View style={styles.scrollContent}>
-                        {clientes.map((cliente) => {
-                            return (
-                                <View
-                                    style={styles.cardContainer}
-                                    key={cliente.id}
-                                >
-                                    <Card
-                                        data={cliente}
-                                        shadow={true}
-                                        onDelete={() => {
-                                            alert("Eliminar");
-                                        }}
-                                    />
-                                </View>
-                            );
-                        })}
-                    </View>
-                </ScrollView>
-            </View>
-        </LinearGradient>
-    );
+                <View style={styles.inputContent}>
+                    <Input
+                        bgColor="#fff"
+                        borderRadius={50}
+                        shadow={true}
+                        placeholder="nombre"
+                        placeholderColor="#cacaca"
+                        width="90%"
+                        paddingVertical={9}
+                        paddingHorizontal={20}
+                        color="#2ba6ff"
+                    />
+                </View>
+                <View style={{ ...styles.content, ...styles.shadow }}>
+                    <ScrollView style={styles.scroll}>
+                        <View style={styles.scrollContent}>
+                            {clientes.map((cliente) => {
+                                return (
+                                    <View
+                                        style={styles.cardContainer}
+                                        key={cliente.id}
+                                    >
+                                        <Card
+                                            data={cliente}
+                                            shadow={true}
+                                            onDelete={() => {
+                                                alert("Eliminar");
+                                            }}
+                                        />
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    </ScrollView>
+                </View>
+            </LinearGradient>
+        );
+    }
 };
 
 export default Home;
