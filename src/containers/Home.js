@@ -133,8 +133,18 @@ const BotonDeNuevoCliente = ({ onSubmit }) => {
     );
 };
 
+//funcion para filtrar los elementos
+function isSearched(searchValue) {
+    return function (item) {
+        return String(item.name)
+            .toLowerCase()
+            .includes(String(searchValue).toLowerCase());
+    };
+}
+
 const Home = ({ navigation }) => {
     const [clientes, setClientes] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
     const { loading, data } = useQuery(GET_USER);
 
     React.useEffect(() => {
@@ -167,6 +177,7 @@ const Home = ({ navigation }) => {
                     }}
                 />
                 <View style={styles.inputContent}>
+                    {/* input para el filtro */}
                     <Input
                         bgColor="#fff"
                         borderRadius={50}
@@ -177,27 +188,34 @@ const Home = ({ navigation }) => {
                         paddingVertical={9}
                         paddingHorizontal={20}
                         color="#2ba6ff"
+                        // funciones para los datos del input
+                        onChange={(value) => {
+                            setSearchValue(value);
+                        }}
+                        defaultValue={searchValue}
                     />
                 </View>
                 <View style={{ ...styles.content, ...styles.shadow }}>
                     <ScrollView style={styles.scroll}>
                         <View style={styles.scrollContent}>
-                            {clientes.map((cliente) => {
-                                return (
-                                    <View
-                                        style={styles.cardContainer}
-                                        key={cliente.id}
-                                    >
-                                        <Card
-                                            data={cliente}
-                                            shadow={true}
-                                            onDelete={() => {
-                                                alert("Eliminar");
-                                            }}
-                                        />
-                                    </View>
-                                );
-                            })}
+                            {clientes
+                                .filter(isSearched(searchValue))
+                                .map((cliente) => {
+                                    return (
+                                        <View
+                                            style={styles.cardContainer}
+                                            key={cliente.id}
+                                        >
+                                            <Card
+                                                data={cliente}
+                                                shadow={true}
+                                                onDelete={() => {
+                                                    alert("Eliminar");
+                                                }}
+                                            />
+                                        </View>
+                                    );
+                                })}
                         </View>
                     </ScrollView>
                 </View>
