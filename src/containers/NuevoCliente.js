@@ -5,6 +5,28 @@ import { FormContainer, Button } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
 import RadioForm from "react-native-simple-radio-button";
 
+import { useForm } from "../hooks/";
+
+//getUserData
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+
+const GET_ID = gql`
+    query {
+        getUser {
+            userData {
+                id
+            }
+        }
+        getPhoneTypes {
+            types {
+                id
+                type
+            }
+        }
+    }
+`;
+
 const Botonera = ({ children }) => (
     <View style={{ ...styles.botoneraContainer }}>{children}</View>
 );
@@ -48,6 +70,8 @@ const Input = ({
     customStyles,
     inputCustomStyles,
     keyboardType,
+    onChangeText,
+    values,
 }) => {
     let titulo_modificado = "";
 
@@ -85,6 +109,8 @@ const Input = ({
                 autoCapitalize="none"
                 selectionColor="#2ba6ff"
                 keyboardType={keyboardType}
+                onChangeText={onChangeText}
+                values={values}
             />
             {warning ? (
                 <Text
@@ -114,82 +140,130 @@ const ViewHorizontal = ({ children }) => {
 };
 
 var radio_props = [
-    { label: "Normal", value: "Normal" },
-    { label: "Principal", value: "Principal" },
+    { label: "Normal", value: false },
+    { label: "Principal", value: true },
 ];
 
+// * componente principal
 const NuevoCliente = () => {
-    const [radioButtomValue, setRadioButtomValue] = React.useState("Normal");
+    const [radioButtomValue, setRadioButtomValue] = React.useState(false);
+
+    const { loading, data } = useQuery(GET_ID);
+
+    //initial state
+    const initialState = {
+        name: "",
+        user: "",
+        measures: {
+            height: 0,
+            waist: 0,
+        },
+        phone: {
+            phone: "",
+            phoneType: "",
+        },
+    };
 
     const onPress = (value) => {
         setRadioButtomValue(value);
     };
 
-    return (
-        <FormContainer paddingNone={true}>
-            <ScrollView style={{ ...styles.scroll }}>
-                <Input
-                    titulo="Nombre del cliente:"
-                    customStyles={{ marginTop: 20 }}
-                />
-                <Input
-                    titulo="Telefono:"
-                    customStyles={{ marginTop: 20 }}
-                    keyboardType="numeric"
-                />
-                <ContenedorDeRadioButtons>
-                    <RadioForm
-                        radio_props={radio_props}
-                        initial={radioButtomValue}
-                        formHorizontal={true}
-                        onPress={onPress}
-                        buttonColor={"#aaa"}
-                        labelColor={"#aaa"}
-                        labelStyle={{
-                            marginRight: 20,
-                            fontWeight: "bold",
-                            fontSize: 18,
-                        }}
-                        buttonSize={10}
-                        selectedButtonColor={"#2ba6ff"}
-                        selectedLabelColor={"#2ba6ff"}
-                    />
-                </ContenedorDeRadioButtons>
-                <Text style={{ ...inputStyles.text, marginTop: 10 }}>
-                    Medidas
-                </Text>
-                <ViewHorizontal>
-                    <Input
-                        placeholder="Altura"
-                        inputCustomStyles={{ width: 100, textAlign: "center" }}
-                        keyboardType="numeric"
-                    />
-                    <Input
-                        placeholder="Cintura"
-                        customStyles={{
-                            marginHorizontal: -20,
-                        }}
-                        inputCustomStyles={{ width: 100, textAlign: "center" }}
-                        keyboardType="numeric"
-                    />
-                </ViewHorizontal>
-            </ScrollView>
-            <Botonera>
-                <Button
-                    title="Agregar"
-                    borderRadius={100}
-                    bgColor="#2ba6ff"
-                    iconName="md-person-add"
-                    fontSize={20}
-                    shadow={true}
-                    margin={0}
-                    iconSize={28}
-                    letterSpacing={1}
-                    elevation={4}
-                />
-            </Botonera>
-        </FormContainer>
+    const onSubmit = (values) => {
+        console.log(values);
+    };
+
+    //use hook implement
+    const { handleSubmit, inputs, subscribe, subscribeSubObject } = useForm(
+        initialState,
+        onSubmit
     );
+
+    if (loading) {
+        return <FormContainer paddingNone={true}></FormContainer>;
+    } else {
+        const userId = data.getUser.userData.id;
+
+        inputs.user = userId;
+
+        console.log(data);
+
+        return (
+            <FormContainer paddingNone={true}>
+                <ScrollView style={{ ...styles.scroll }}>
+                    <Input
+                        titulo="Nombre del cliente:"
+                        customStyles={{ marginTop: 20 }}
+                        onChangeText={subscribe("name")}
+                        values={inputs.name}
+                    />
+                    <Input
+                        titulo="Telefono:"
+                        customStyles={{ marginTop: 20 }}
+                        keyboardType="numeric"
+                        onChangeText={subscribeSubObject("phone", "phone")}
+                        values={inputs.phone.phone}
+                    />
+                    <ContenedorDeRadioButtons>
+                        <RadioForm
+                            radio_props={radio_props}
+                            initial={radioButtomValue}
+                            formHorizontal={true}
+                            onPress={onPress}
+                            buttonColor={"#aaa"}
+                            labelColor={"#aaa"}
+                            labelStyle={{
+                                marginRight: 20,
+                                fontWeight: "bold",
+                                fontSize: 18,
+                            }}
+                            buttonSize={10}
+                            selectedButtonColor={"#2ba6ff"}
+                            selectedLabelColor={"#2ba6ff"}
+                        />
+                    </ContenedorDeRadioButtons>
+                    <Text style={{ ...inputStyles.text, marginTop: 10 }}>
+                        Medidas
+                    </Text>
+                    <ViewHorizontal>
+                        <Input
+                            placeholder="Altura"
+                            inputCustomStyles={{
+                                width: 100,
+                                textAlign: "center",
+                            }}
+                            keyboardType="numeric"
+                        />
+                        <Input
+                            placeholder="Cintura"
+                            customStyles={{
+                                marginHorizontal: -20,
+                            }}
+                            inputCustomStyles={{
+                                width: 100,
+                                textAlign: "center",
+                            }}
+                            keyboardType="numeric"
+                        />
+                    </ViewHorizontal>
+                </ScrollView>
+                <Botonera>
+                    <Button
+                        title="Agregar"
+                        borderRadius={100}
+                        bgColor="#2ba6ff"
+                        iconName="md-person-add"
+                        fontSize={20}
+                        shadow={true}
+                        margin={0}
+                        iconSize={28}
+                        letterSpacing={1}
+                        elevation={4}
+                        handleSubmit={handleSubmit}
+                    />
+                </Botonera>
+            </FormContainer>
+        );
+    }
 };
 
 export default NuevoCliente;
