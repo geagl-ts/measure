@@ -5,7 +5,6 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 
 import { FormContainer, Button } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
-import RadioForm from "react-native-simple-radio-button";
 
 import { useForm } from "../hooks/";
 
@@ -57,14 +56,6 @@ const inputStyles = StyleSheet.create({
     warning: { color: "coral", fontSize: 16 },
 });
 
-const radioButtonStyles = StyleSheet.create({
-    container: { marginLeft: 20, marginTop: 20 },
-});
-
-const ContenedorDeRadioButtons = ({ children }) => {
-    return <View style={{ ...radioButtonStyles.container }}>{children}</View>;
-};
-
 const Input = ({
     titulo,
     placeholder,
@@ -73,7 +64,8 @@ const Input = ({
     inputCustomStyles,
     keyboardType,
     onChangeText,
-    values,
+    value,
+    warningMessage,
 }) => {
     let titulo_modificado = "";
 
@@ -112,7 +104,7 @@ const Input = ({
                 selectionColor="#2ba6ff"
                 keyboardType={keyboardType}
                 onChangeText={onChangeText}
-                values={values}
+                value={value}
             />
             {warning ? (
                 <Text
@@ -121,7 +113,7 @@ const Input = ({
                         ...inputStyles.warning,
                     }}
                 >
-                    Warning
+                    {warningMessage}
                 </Text>
             ) : (
                 <></>
@@ -136,9 +128,10 @@ const pickerStyles = StyleSheet.create({
     },
     picker: {
         borderWidth: 2,
-        width: "90%",
+        width: "88%",
         borderColor: "#aaa",
         marginTop: 2,
+        borderRadius: 5,
     },
 });
 
@@ -168,15 +161,24 @@ const ViewHorizontal = ({ children }) => {
     return <View style={{ ...viewHorizontal.container }}>{children}</View>;
 };
 
-var radio_props = [
-    { label: "Normal", value: false },
-    { label: "Principal", value: true },
-];
-
 // * componente principal
+
+const validInputs = ({ name, measures, phone }) => {
+    if (
+        String(name).length === 0 ||
+        measures.height === 0 ||
+        measures.waist === 0 ||
+        String(phone.phone).length === 0
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
 const NuevoCliente = () => {
-    const [radioButtomValue, setRadioButtomValue] = useState(false);
     const [phoneType, setPhoneType] = useState("");
+    const [showWarning, setShowWarning] = useState(false);
 
     const { loading, data } = useQuery(GET_ID);
 
@@ -194,12 +196,20 @@ const NuevoCliente = () => {
         },
     };
 
-    const onPress = (value) => {
-        setRadioButtomValue(value);
-    };
-
-    const onSubmit = (values) => {
+    const onSubmit = async (values) => {
         console.log(values);
+
+        if (validInputs(values)) {
+            console.log("si");
+            if (phoneType.length === 0) {
+                values.phone.phoneType = data.getPhoneTypes.types[0].id;
+            } else {
+                values.phone.phoneType = phoneType;
+            }
+        } else {
+            setShowWarning(true);
+            console.log("no");
+        }
     };
 
     //use hook implement
@@ -224,20 +234,30 @@ const NuevoCliente = () => {
                         titulo="Nombre del cliente:"
                         customStyles={{ marginTop: 20 }}
                         onChangeText={subscribe("name")}
-                        values={inputs.name}
+                        value={inputs.name}
+                        warning={showWarning && inputs.name.length === 0}
+                        warningMessage={"Por favor ingrese el nombre"}
                     />
                     <Input
                         titulo="Telefono:"
                         customStyles={{ marginTop: 20 }}
                         keyboardType="numeric"
                         onChangeText={subscribeSubObject("phone", "phone")}
-                        values={inputs.phone.phone}
+                        value={inputs.phone.phone}
+                        warning={showWarning && inputs.phone.phone.length === 0}
+                        warningMessage={"Por favor ingrese el numero"}
                     />
                     <ContenedorDePickers titulo="Tipo de telefono">
-                        <Picker>
+                        <Picker
+                            selectedValue={phoneType}
+                            onValueChange={(itemValue, itemIndex) => {
+                                setPhoneType(itemValue);
+                            }}
+                        >
                             {arrayPhoneTypes.map(({ type, id }) => {
                                 return (
                                     <Picker.Item
+                                        color="#aaa"
                                         label={type}
                                         value={id}
                                         key={id}
@@ -246,24 +266,6 @@ const NuevoCliente = () => {
                             })}
                         </Picker>
                     </ContenedorDePickers>
-                    <ContenedorDeRadioButtons>
-                        <RadioForm
-                            radio_props={radio_props}
-                            initial={radioButtomValue}
-                            formHorizontal={true}
-                            onPress={onPress}
-                            buttonColor={"#aaa"}
-                            labelColor={"#aaa"}
-                            labelStyle={{
-                                marginRight: 20,
-                                fontWeight: "bold",
-                                fontSize: 18,
-                            }}
-                            buttonSize={10}
-                            selectedButtonColor={"#2ba6ff"}
-                            selectedLabelColor={"#2ba6ff"}
-                        />
-                    </ContenedorDeRadioButtons>
                     <Text style={{ ...inputStyles.text, marginTop: 10 }}>
                         Medidas
                     </Text>
@@ -275,6 +277,11 @@ const NuevoCliente = () => {
                                 textAlign: "center",
                             }}
                             keyboardType="numeric"
+                            onChangeText={subscribeSubObject(
+                                "measures",
+                                "height"
+                            )}
+                            value={inputs.measures.height}
                         />
                         <Input
                             placeholder="Cintura"
@@ -286,6 +293,11 @@ const NuevoCliente = () => {
                                 textAlign: "center",
                             }}
                             keyboardType="numeric"
+                            onChangeText={subscribeSubObject(
+                                "measures",
+                                "waist"
+                            )}
+                            value={inputs.measures.waist}
                         />
                     </ViewHorizontal>
                 </ScrollView>

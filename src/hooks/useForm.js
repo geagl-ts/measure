@@ -11,6 +11,7 @@ export default (initialState, onSubmit) => {
         setInputs({
             ...inputs,
             [name]: {
+                ...inputs[name],
                 [input]: value,
             },
         });
