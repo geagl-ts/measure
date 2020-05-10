@@ -12,6 +12,8 @@ import { useForm } from "../hooks/";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
+import PrintMessage from "../features/messageInScreen";
+
 const GET_ID = gql`
     query {
         getUser {
@@ -164,13 +166,10 @@ const ViewHorizontal = ({ children }) => {
 // * componente principal
 
 const validInputs = ({ name, measures, phone }) => {
-    if (
-        String(name).length === 0 ||
-        measures.height === 0 ||
-        measures.waist === 0 ||
-        String(phone.phone).length === 0
-    ) {
+    if (String(name).length === 0 || String(phone.phone).length === 0) {
         return false;
+    } else if (measures.height === 0 || measures.waist === 0) {
+        PrintMessage("Las medidas no pueden ser 0");
     } else {
         return true;
     }
@@ -281,7 +280,11 @@ const NuevoCliente = () => {
                                 "measures",
                                 "height"
                             )}
-                            value={inputs.measures.height}
+                            value={
+                                inputs.measures.height === 0
+                                    ? ""
+                                    : String(inputs.measures.height)
+                            }
                         />
                         <Input
                             placeholder="Cintura"
@@ -297,7 +300,11 @@ const NuevoCliente = () => {
                                 "measures",
                                 "waist"
                             )}
-                            value={inputs.measures.waist}
+                            value={
+                                inputs.measures.waist === 0
+                                    ? ""
+                                    : String(inputs.measures.waist)
+                            }
                         />
                     </ViewHorizontal>
                 </ScrollView>
