@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+//piker
+import { Picker } from "@react-native-community/picker";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
 import { FormContainer, Button } from "../components";
@@ -128,6 +130,33 @@ const Input = ({
     );
 };
 
+const pickerStyles = StyleSheet.create({
+    container: {
+        marginTop: 20,
+    },
+    picker: {
+        borderWidth: 2,
+        width: "90%",
+        borderColor: "#aaa",
+        marginTop: 2,
+    },
+});
+
+const ContenedorDePickers = ({ children, titulo }) => {
+    return (
+        <View style={{ ...pickerStyles.container }}>
+            {titulo ? (
+                <Text style={{ ...inputStyles.text }}>{titulo}</Text>
+            ) : (
+                <></>
+            )}
+            <View style={{ ...pickerStyles.picker, marginLeft: 20 }}>
+                {children}
+            </View>
+        </View>
+    );
+};
+
 const viewHorizontal = StyleSheet.create({
     container: {
         flexDirection: "row",
@@ -146,7 +175,8 @@ var radio_props = [
 
 // * componente principal
 const NuevoCliente = () => {
-    const [radioButtomValue, setRadioButtomValue] = React.useState(false);
+    const [radioButtomValue, setRadioButtomValue] = useState(false);
+    const [phoneType, setPhoneType] = useState("");
 
     const { loading, data } = useQuery(GET_ID);
 
@@ -185,7 +215,7 @@ const NuevoCliente = () => {
 
         inputs.user = userId;
 
-        console.log(data);
+        const arrayPhoneTypes = [...data.getPhoneTypes.types];
 
         return (
             <FormContainer paddingNone={true}>
@@ -203,6 +233,19 @@ const NuevoCliente = () => {
                         onChangeText={subscribeSubObject("phone", "phone")}
                         values={inputs.phone.phone}
                     />
+                    <ContenedorDePickers titulo="Tipo de telefono">
+                        <Picker>
+                            {arrayPhoneTypes.map(({ type, id }) => {
+                                return (
+                                    <Picker.Item
+                                        label={type}
+                                        value={id}
+                                        key={id}
+                                    />
+                                );
+                            })}
+                        </Picker>
+                    </ContenedorDePickers>
                     <ContenedorDeRadioButtons>
                         <RadioForm
                             radio_props={radio_props}
