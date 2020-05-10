@@ -13,6 +13,7 @@ const GET_USER_DATA = gql`
     query {
         getUser {
             userData {
+                id
                 email
             }
         }
@@ -58,14 +59,14 @@ const About = ({ navigation }) => {
     //implement useQuery Hook
     const { loading, data, refetch } = useQuery(GET_USER_DATA);
 
-    // //useEffect que se activa cuando regreso a la pantalla
-    // useEffect(() => {
-    //     const unsubscribe = navigation.addListener("focus", async () => {
-    //         refetch();
-    //     });
+    //useEffect que se activa cuando regreso a la pantalla
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener("focus", async () => {
+            refetch();
+        });
 
-    //     return unsubscribe;
-    // }, [navigation]);
+        return unsubscribe;
+    }, [navigation]);
 
     const onPressLink = async () => {
         await AsyncStorage.removeItem("Token");

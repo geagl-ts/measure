@@ -10,7 +10,7 @@ import { useForm } from "../hooks/";
 
 //getUserData
 import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import PrintMessage from "../features/messageInScreen";
 
@@ -163,6 +163,29 @@ const ViewHorizontal = ({ children }) => {
     return <View style={{ ...viewHorizontal.container }}>{children}</View>;
 };
 
+//new client
+const ADD_CLIENT = gql`
+    mutation addClient(
+        $name: String!
+        $user: ID!
+        $height: Int!
+        $waist: Int!
+        $phone: String!
+        $phoneType: ID!
+    ) {
+        addClient(
+            input: {
+                name: $name
+                user: $user
+                measures: { height: $height, waist: $waist }
+                phone: { phone: $phone, phoneType: $phoneType }
+            }
+        ) {
+            message
+        }
+    }
+`;
+
 // * componente principal
 
 const validInputs = ({ name, measures, phone }) => {
@@ -175,11 +198,14 @@ const validInputs = ({ name, measures, phone }) => {
     }
 };
 
-const NuevoCliente = () => {
+const NuevoCliente = ({ navigation }) => {
     const [phoneType, setPhoneType] = useState("");
     const [showWarning, setShowWarning] = useState(false);
 
     const { loading, data } = useQuery(GET_ID);
+
+    //mutation
+    const [addClient] = useMutation(ADD_CLIENT);
 
     //initial state
     const initialState = {
@@ -196,18 +222,32 @@ const NuevoCliente = () => {
     };
 
     const onSubmit = async (values) => {
-        console.log(values);
-
         if (validInputs(values)) {
-            console.log("si");
             if (phoneType.length === 0) {
                 values.phone.phoneType = data.getPhoneTypes.types[0].id;
             } else {
                 values.phone.phoneType = phoneType;
             }
+
+            const { data: response, errors } = await addClient({
+                variables: {
+                    name: values.name,
+                    height: Number(values.measures.height),
+                    waist: Number(values.measures.waist),
+                    user: values.user,
+                    phone: values.phone.phone,
+                    phoneType: values.phone.phoneType,
+                },
+            });
+
+            if (errors) {
+                PrintMessage("??");
+            } else {
+                PrintMessage(response.addClient.message);
+                navigation.navigate("HomeNavigator");
+            }
         } else {
             setShowWarning(true);
-            console.log("no");
         }
     };
 
@@ -320,7 +360,9 @@ const NuevoCliente = () => {
                         iconSize={28}
                         letterSpacing={1}
                         elevation={4}
-                        handleSubmit={handleSubmit}
+                        handleSubmit={() => {
+                            handleSubmit();
+                        }}
                     />
                 </Botonera>
             </FormContainer>

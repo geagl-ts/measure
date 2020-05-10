@@ -145,7 +145,15 @@ function isSearched(searchValue) {
 const Home = ({ navigation }) => {
     const [clientes, setClientes] = useState([]);
     const [searchValue, setSearchValue] = useState("");
-    const { loading, data } = useQuery(GET_USER);
+    const { loading, data, refetch } = useQuery(GET_USER);
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener("focus", async () => {
+            refetch();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     React.useEffect(() => {
         if (data) {
