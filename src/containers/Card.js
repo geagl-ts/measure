@@ -105,7 +105,7 @@ const BotonDeTargeta = ({ children, styles, onSubmit, titulo }) => {
     );
 };
 
-const Card = ({ shadow, onDelete, data }) => {
+const Card = ({ shadow, onDelete, onUpdate, data }) => {
     return (
         <ContenedorDeTargeta shadow={shadow}>
             <VistaPrincipalDeLaTargeta>
@@ -125,9 +125,7 @@ const Card = ({ shadow, onDelete, data }) => {
                     styles={{
                         ...styles.posicionDeIcono,
                     }}
-                    onSubmit={() => {
-                        Alert.alert("Mensaje", "Actualizar");
-                    }}
+                    onSubmit={onUpdate}
                     titulo="Actualizar"
                 >
                     <MaterialIcons name="update" size={33} color="#2ba6ff" />

@@ -263,6 +263,11 @@ const Home = ({ navigation }) => {
                                                     onDelete={() => {
                                                         onDelete(cliente.id);
                                                     }}
+                                                    onUpdate={() => {
+                                                        navigation.navigate(
+                                                            "UpdateClientForm"
+                                                        );
+                                                    }}
                                                 />
                                             </View>
                                         );

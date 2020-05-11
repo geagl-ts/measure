@@ -6,6 +6,7 @@ import {
     SignUp,
     AuthLoading,
     NuevoCliente,
+    UpdateClientForm,
 } from "./containers";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -74,6 +75,10 @@ const StackNavigator = () => {
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="HomeNavigator" component={BottomNavigator} />
             <Stack.Screen name="NuevoCliente" component={NuevoCliente} />
+            <Stack.Screen
+                name="UpdateClientForm"
+                component={UpdateClientForm}
+            />
         </Stack.Navigator>
     );
 };
