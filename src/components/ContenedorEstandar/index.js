@@ -2,10 +2,11 @@ import React, { Children } from "react";
 import { View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
+import { Contenido } from "./Componentes";
+
 import {
     PRIMER_COLOR_GRADIENTE,
     SEGUNDO_COLOR_GRADIENTE,
-    TEXT_HEADER,
 } from "./LocalVariables";
 
 import { styles } from "./styles";
@@ -16,7 +17,7 @@ const index = ({ children }) => {
             colors={[PRIMER_COLOR_GRADIENTE, SEGUNDO_COLOR_GRADIENTE]}
             style={{ ...styles.container }}
         >
-            {children}
+            <Contenido>{children}</Contenido>
         </LinearGradient>
     );
 };
