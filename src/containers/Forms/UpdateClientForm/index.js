@@ -1,12 +1,11 @@
 import React from "react";
 
-import { ContenedorEstandar } from "../../components";
-import { Text } from "react-native";
+import { ContenedorEstandar, Titulo } from "../../../components";
 
 const UpdateClientForm = () => {
     return (
         <ContenedorEstandar>
-            <Text>Hola</Text>
+            <Titulo color="#2ba6ff">Nombre</Titulo>
         </ContenedorEstandar>
     );
 };
