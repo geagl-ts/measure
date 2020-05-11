@@ -5,21 +5,20 @@ import { PORCENTAJE, COLOR } from "./LocalVariables";
 export const styles = StyleSheet.create({
     textInput: {
         fontSize: 26,
-        maxWidth: PORCENTAJE(90),
+        width: PORCENTAJE(90),
         padding: 5,
         textAlign: "center",
         fontWeight: "bold",
     },
     underline: {
         backgroundColor: "#efefef",
-        width: PORCENTAJE(90),
         paddingVertical: 10,
         borderBottomColor: COLOR,
         borderBottomWidth: 5,
     },
     border: { borderBottomColor: COLOR, borderBottomWidth: 5 },
     bigFont: {
-        fontSize: 32,
+        fontSize: 26,
     },
 });
 
