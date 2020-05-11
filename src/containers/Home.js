@@ -5,6 +5,7 @@ import {
     ScrollView,
     Text,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Input } from "../components";
@@ -12,11 +13,12 @@ import Card from "./Card";
 
 //data of graphql
 import { gql } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
 
 const GET_USER = gql`
     query {
         getUser {
+            loading
             userData {
                 id
                 clients {
@@ -34,6 +36,15 @@ const GET_USER = gql`
                     }
                 }
             }
+        }
+    }
+`;
+
+const REMOVE_CLIENT = gql`
+    mutation removeClient($clientId: ID!) {
+        removeClient(clientId: $clientId) {
+            message
+            loading
         }
     }
 `;
@@ -142,10 +153,13 @@ function isSearched(searchValue) {
     };
 }
 
+import PrintMessage from "../features/messageInScreen";
+
 const Home = ({ navigation }) => {
-    const [clientes, setClientes] = useState([]);
     const [searchValue, setSearchValue] = useState("");
+
     const { loading, data, refetch } = useQuery(GET_USER);
+    const [removeClient] = useMutation(REMOVE_CLIENT);
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener("focus", async () => {
@@ -155,15 +169,37 @@ const Home = ({ navigation }) => {
         return unsubscribe;
     }, [navigation]);
 
-    React.useEffect(() => {
-        if (data) {
-            const { getUser } = data;
-            setClientes(getUser.userData.clients);
-        }
-    }, [data]);
+    const onDelete = (id) => {
+        Alert.alert("Confirmacion", "Esta seguro?", [
+            {
+                text: "Cancelar",
+                onPress: () => {},
+                style: "cancel",
+            },
+            {
+                text: "Confirmar",
+                onPress: async () => {
+                    const {
+                        data: {
+                            removeClient: { message },
+                        },
+                    } = await removeClient({
+                        variables: {
+                            clientId: id,
+                        },
+                    });
 
-    const onPressLink = () => {
-        navigation.navigate("AuthLoading");
+                    if (
+                        message !== "error" ||
+                        message !== "No debes estar aqui"
+                    ) {
+                        refetch();
+                    }
+
+                    PrintMessage(message);
+                },
+            },
+        ]);
     };
 
     if (loading) {
@@ -174,61 +210,71 @@ const Home = ({ navigation }) => {
             ></LinearGradient>
         );
     } else {
-        return (
-            <LinearGradient
-                colors={["#2ba6ff", "#2bffed"]}
-                style={styles.container}
-            >
-                <BotonDeNuevoCliente
-                    onSubmit={() => {
-                        navigation.navigate("NuevoCliente");
-                    }}
-                />
-                <View style={styles.inputContent}>
-                    {/* input para el filtro */}
-                    <Input
-                        bgColor="#fff"
-                        borderRadius={50}
-                        shadow={true}
-                        placeholder="nombre"
-                        placeholderColor="#cacaca"
-                        width="90%"
-                        paddingVertical={9}
-                        paddingHorizontal={20}
-                        color="#2ba6ff"
-                        // funciones para los datos del input
-                        onChange={(value) => {
-                            setSearchValue(value);
+        if (data !== undefined) {
+            const {
+                getUser: {
+                    userData: { clients },
+                },
+            } = data;
+
+            return (
+                <LinearGradient
+                    colors={["#2ba6ff", "#2bffed"]}
+                    style={styles.container}
+                >
+                    <BotonDeNuevoCliente
+                        onSubmit={() => {
+                            navigation.navigate("NuevoCliente");
                         }}
-                        defaultValue={searchValue}
                     />
-                </View>
-                <View style={{ ...styles.content, ...styles.shadow }}>
-                    <ScrollView style={styles.scroll}>
-                        <View style={styles.scrollContent}>
-                            {clientes
-                                .filter(isSearched(searchValue))
-                                .map((cliente) => {
-                                    return (
-                                        <View
-                                            style={styles.cardContainer}
-                                            key={cliente.id}
-                                        >
-                                            <Card
-                                                data={cliente}
-                                                shadow={true}
-                                                onDelete={() => {
-                                                    alert("Eliminar");
-                                                }}
-                                            />
-                                        </View>
-                                    );
-                                })}
-                        </View>
-                    </ScrollView>
-                </View>
-            </LinearGradient>
-        );
+                    <View style={styles.inputContent}>
+                        {/* input para el filtro */}
+                        <Input
+                            bgColor="#fff"
+                            borderRadius={50}
+                            shadow={true}
+                            placeholder="nombre"
+                            placeholderColor="#cacaca"
+                            width="90%"
+                            paddingVertical={9}
+                            paddingHorizontal={20}
+                            color="#2ba6ff"
+                            // funciones para los datos del input
+                            onChange={(value) => {
+                                setSearchValue(value);
+                            }}
+                            defaultValue={searchValue}
+                        />
+                    </View>
+                    <View style={{ ...styles.content, ...styles.shadow }}>
+                        <ScrollView style={styles.scroll}>
+                            <View style={styles.scrollContent}>
+                                {clients
+                                    .filter(isSearched(searchValue))
+                                    .map((cliente) => {
+                                        return (
+                                            <View
+                                                style={styles.cardContainer}
+                                                key={cliente.id}
+                                            >
+                                                <Card
+                                                    data={cliente}
+                                                    shadow={true}
+                                                    onDelete={() => {
+                                                        onDelete(cliente.id);
+                                                    }}
+                                                />
+                                            </View>
+                                        );
+                                    })}
+                            </View>
+                        </ScrollView>
+                    </View>
+                </LinearGradient>
+            );
+        } else {
+            return <></>;
+        }
     }
 };
 
