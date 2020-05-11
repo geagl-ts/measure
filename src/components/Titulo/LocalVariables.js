@@ -1,1 +1,1 @@
-
+export const COLOR = "#aaa";

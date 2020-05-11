@@ -1,13 +1,38 @@
 import React from "react";
-import { Text } from "react-native";
-import { COLOR } from "./LocalVariables";
-import { styles } from "./styles";
 
-const index = ({ children, color }) => {
+import { TextInput } from "react-native";
+import {
+    STANDARD_PLACEHOLDER,
+    STANDARD_PLACEHOLDER_COLOR,
+    COLOR,
+} from "./LocalVariables";
+
+import { styleInput as styleI } from "./styles";
+
+const index = ({
+    placeholder,
+    onChangeText,
+    value,
+    color,
+    styleInput,
+    phcolor,
+}) => {
     return (
-        <Text style={{ color: COLOR || color, ...styles.text }}>
-            {children}
-        </Text>
+        <TextInput
+            placeholder={
+                placeholder
+                    ? String(placeholder).toLowerCase()
+                    : STANDARD_PLACEHOLDER
+            }
+            placeholderTextColor={phcolor || STANDARD_PLACEHOLDER_COLOR}
+            style={{
+                ...styleI(styleInput),
+                borderBottomColor: color ? color : COLOR,
+                color: color ? color : COLOR,
+            }}
+            onChangeText={onChangeText}
+            value={value}
+        />
     );
 };
 

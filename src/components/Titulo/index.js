@@ -5,7 +5,7 @@ import { styles } from "./styles";
 
 const index = ({ children, color }) => {
     return (
-        <Text style={{ color: COLOR || color, ...styles.text }}>
+        <Text style={{ color: color || COLOR, ...styles.text }}>
             {children}
         </Text>
     );
