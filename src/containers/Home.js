@@ -13,7 +13,7 @@ import Card from "./Card";
 
 //data of graphql
 import { gql } from "apollo-boost";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 const GET_USER = gql`
     query {
@@ -168,7 +168,6 @@ const Home = ({ navigation }) => {
 
         return unsubscribe;
     }, [navigation]);
-
     const onDelete = (id) => {
         Alert.alert("Confirmacion", "Esta seguro?", [
             {
@@ -265,7 +264,11 @@ const Home = ({ navigation }) => {
                                                     }}
                                                     onUpdate={() => {
                                                         navigation.navigate(
-                                                            "UpdateClientForm"
+                                                            "UpdateClientForm",
+                                                            {
+                                                                clientId:
+                                                                    cliente.id,
+                                                            }
                                                         );
                                                     }}
                                                 />

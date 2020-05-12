@@ -3,7 +3,7 @@ import { TouchableOpacity, Text } from "react-native";
 import { COLOR, BACKGROUND_COLOR } from "./LocalVariables";
 import { styles } from "./styles";
 
-const index = ({ children, bg, tcolor }) => {
+const index = ({ children, bg, tcolor, onSubmit }) => {
     return (
         <TouchableOpacity
             style={{
@@ -11,6 +11,7 @@ const index = ({ children, bg, tcolor }) => {
                 backgroundColor: bg || BACKGROUND_COLOR,
             }}
             activeOpacity={0.5}
+            onPress={onSubmit}
         >
             <Text style={{ ...styles.texto, color: tcolor || COLOR }}>
                 {children}
