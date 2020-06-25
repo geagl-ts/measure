@@ -105,11 +105,11 @@ const BotonDeTargeta = ({ children, styles, onSubmit, titulo }) => {
     );
 };
 
-const Card = ({ shadow, onDelete, onUpdate, data }) => {
+const Card = ({ shadow, onDelete, onUpdate, data, navigation }) => {
     return (
         <ContenedorDeTargeta shadow={shadow}>
             <VistaPrincipalDeLaTargeta>
-                <ModalDeUsuario data={data} />
+                <ModalDeUsuario data={data} navigation={navigation} />
             </VistaPrincipalDeLaTargeta>
             <BotoneraDeLaTargeta>
                 <BotonDeTargeta

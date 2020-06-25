@@ -1,5 +1,11 @@
 import React, { cloneElement, Children } from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+    Text,
+    View,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+} from "react-native";
 
 import { GlobalStyles as gs } from "./GlobalStyles";
 
@@ -40,7 +46,7 @@ export const ContenedorDeListas = ({ children }) => (
     </View>
 );
 
-export const List = ({ data, children }) => (
+export const List = ({ data, children, accionNuevo }) => (
     <ContenedorDeListas>
         <ScrollView>
             {data.map((item) => {
@@ -60,5 +66,27 @@ export const List = ({ data, children }) => (
                 );
             })}
         </ScrollView>
+        <BotonSimple label="nuevo" callback={accionNuevo} />
     </ContenedorDeListas>
 );
+
+// Componentes para este lugar
+const BotonSimple = ({ label, callback }) => {
+    return (
+        <TouchableOpacity
+            activeOpacity={0.3}
+            style={{ position: "absolute", bottom: 5, right: 10 }}
+            onPress={callback}
+        >
+            <Text
+                style={{
+                    fontSize: 24,
+                    fontWeight: "bold",
+                    color: "#2ba6ff",
+                }}
+            >
+                {label}
+            </Text>
+        </TouchableOpacity>
+    );
+};

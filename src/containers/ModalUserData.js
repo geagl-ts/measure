@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Header, SubHeader } from "../components";
+import { Header, SubHeader, Boton } from "../components";
 
 import { List, ContentItemList } from "../components/ListComponents";
 
-const ModalDeCliente = ({ data }) => {
+const ModalDeCliente = ({ data, navigation }) => {
     const [active, setActive] = useState(false);
+
+    const cerrarModal = () => {
+        setActive(!active);
+    };
+
+    const agregarTelefono = () => {
+        setActive(!active);
+        navigation.navigate("FormularioTelefono");
+    };
 
     return (
         <>
@@ -13,18 +22,17 @@ const ModalDeCliente = ({ data }) => {
                 <VistaDelModal>
                     {/* Exit button */}
                     <ContenedorDeBotonSalir>
-                        <BotonDeSalir
-                            onSubmit={() => {
-                                setActive(!active);
-                            }}
-                        />
+                        <BotonDeSalir onSubmit={cerrarModal} />
                     </ContenedorDeBotonSalir>
                     {/* data */}
                     <ContenedorDeDatos>
                         <Header>Nombre</Header>
                         <SubHeader>{data.name}</SubHeader>
                         <Header>Telefonos</Header>
-                        <ListaTelefonos telefonos={data.phones} />
+                        <ListaTelefonos
+                            telefonos={data.phones}
+                            onSubmit={agregarTelefono}
+                        />
                         <Header>Medidas</Header>
                         <ListaMedidas medidas={data.measures} />
                     </ContenedorDeDatos>
@@ -161,7 +169,7 @@ const VistaAntesDelModal = ({ data, onSubmit }) => {
     }
 };
 
-const ListaTelefonos = ({ telefonos }) => {
+const ListaTelefonos = ({ telefonos, onSubmit }) => {
     const Items = ({ item }) => (
         <View key={item.id}>
             <ContentItemList bold={true}>{item.phone}</ContentItemList>
@@ -172,7 +180,7 @@ const ListaTelefonos = ({ telefonos }) => {
     );
 
     return (
-        <List data={telefonos}>
+        <List data={telefonos} accionNuevo={onSubmit}>
             <Items />
         </List>
     );
@@ -192,7 +200,12 @@ const ListaMedidas = ({ medidas }) => {
     );
 
     return (
-        <List data={medidas}>
+        <List
+            data={medidas}
+            accionNuevo={() => {
+                console.log("fui presionado en medidas");
+            }}
+        >
             <Items />
         </List>
     );

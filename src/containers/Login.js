@@ -60,26 +60,35 @@ const Login = ({ navigation }) => {
     const [login] = useMutation(LOGIN);
 
     const onSubmit = async (values) => {
-        if (validInputs(values)) {
-            setLoading(true);
+        try {
+            if (validInputs(values)) {
+                setLoading(true);
 
-            const { data } = await login({
-                variables: values,
-            });
+                const { data } = await login({
+                    variables: values,
+                });
 
-            if (data.login.message === "Usuario y/o Contraseña incorrecto") {
-                PrintMessage(data.login.message);
+                if (
+                    data.login.message === "Usuario y/o Contraseña incorrecto"
+                ) {
+                    PrintMessage(data.login.message);
+                } else {
+                    const { token } = data.login.user;
+
+                    await AsyncStorage.setItem("Token", token);
+                    setLoading(data.login.loading);
+                    PrintMessage(data.login.message);
+
+                    navigation.navigate("HomeNavigator");
+                }
             } else {
-                const { token } = data.login.user;
-
-                await AsyncStorage.setItem("Token", token);
-                setLoading(data.login.loading);
-                PrintMessage(data.login.message);
-
-                navigation.navigate("HomeNavigator");
+                setLoading(false);
+                PrintMessage("Verifique su informacion");
             }
-        } else {
-            PrintMessage("Verifique su informacion");
+        } catch (e) {
+            setLoading(false);
+            PrintMessage("Estamos teniendo problemas, disculpe");
+            console.log(e);
         }
     };
 

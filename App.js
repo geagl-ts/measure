@@ -9,10 +9,16 @@ import App from "./src";
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-client-preset";
 import { ApolloProvider } from "@apollo/react-hooks";
 
+uri = (tipo = "test") => {
+    return tipo === "final"
+        ? "https://measure-app.herokuapp.com/graphql"
+        : "http://localhost:4000/";
+};
+
 const client = (authorization) => {
     return new ApolloClient({
         link: new HttpLink({
-            uri: "https://measure-app.herokuapp.com/graphql",
+            uri: uri("final"),
             headers: {
                 authorization,
             },
@@ -27,7 +33,9 @@ export default () => {
     useEffect(() => {
         const getToken = async () => {
             const token = await AsyncStorage.getItem("Token");
-            setToken(token);
+            if (token) {
+                setToken(token);
+            }
         };
 
         getToken();

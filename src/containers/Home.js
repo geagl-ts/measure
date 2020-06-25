@@ -262,6 +262,7 @@ const Home = ({ navigation }) => {
                                                     onDelete={() => {
                                                         onDelete(cliente.id);
                                                     }}
+                                                    navigation={navigation}
                                                     onUpdate={() => {
                                                         navigation.navigate(
                                                             "UpdateClientForm",
