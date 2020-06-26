@@ -3,12 +3,13 @@ import { TouchableOpacity, Text } from "react-native";
 import { COLOR, BACKGROUND_COLOR, TEXT_SIZE_ESTANDAR } from "./LocalVariables";
 import { styles } from "./styles";
 
-const index = ({ children, bg, tcolor, onSubmit, tzise }) => {
+const index = ({ bg, tcolor, onSubmit, tzise, label, containerStyles }) => {
     return (
         <TouchableOpacity
             style={{
                 ...styles.contenedor,
-                backgroundColor: bg || BACKGROUND_COLOR,
+                backgroundColor: bg || "#2a2a2a",
+                ...containerStyles,
             }}
             activeOpacity={0.5}
             onPress={onSubmit}
@@ -20,7 +21,7 @@ const index = ({ children, bg, tcolor, onSubmit, tzise }) => {
                     fontSize: tzise || TEXT_SIZE_ESTANDAR,
                 }}
             >
-                {children}
+                {label}
             </Text>
         </TouchableOpacity>
     );

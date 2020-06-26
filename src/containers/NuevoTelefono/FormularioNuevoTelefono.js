@@ -1,36 +1,70 @@
-import React from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { Boton } from "../../components";
+import React, { useState } from "react";
+import { View, Text, TextInput } from "react-native";
+import {
+    Boton,
+    RadioButtonGroup,
+    TituloCampo,
+    ContenedorEstandar,
+} from "../../components";
+import Toast from "../../features/messageInScreen";
 import { useFormik } from "formik";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
-const BLACK_COLOR = "#2a2a2a";
+import styles, { BLACK_COLOR } from "./styles";
 
-const validate = (values) => {
-    const errors = {};
+import { NuevoTelefono, TiposDeTelefono } from "./graphql/";
 
-    if (!values.telefono) {
-        errors.telefono = "Requerido";
-    } else if (values.telefono.length !== 10) {
-        errors.telefono = "El campo debe tener 10 caracteres";
-    }
+const NUEVO_TELEFONO = gql`
+    ${NuevoTelefono}
+`;
 
-    return errors;
-};
+const TIPOS_DE_TELEFONO = gql`
+    ${TiposDeTelefono}
+`;
 
-export default function FormularioNuevoTelefono() {
+import validationSchema from "./validations";
+
+export default function FormularioNuevoTelefono({ route, navigation }) {
+    const [tipo, setTipo] = useState("");
+    const { clientid } = route.params;
+
+    const { data, loading, error } = useQuery(TIPOS_DE_TELEFONO);
+    const [addPhone] = useMutation(NUEVO_TELEFONO);
+
+    const onSubmit = async (values) => {
+        if (tipo.length === 0) {
+            Toast("Seleccione un tipo");
+        } else {
+            const datosOrganizados = {
+                phone: values.telefono,
+                phoneType: tipo,
+                client: clientid,
+            };
+
+            const { data: infoNuevoTelefono } = await addPhone({
+                variables: datosOrganizados,
+            });
+
+            Toast(infoNuevoTelefono.addPhone.message);
+            navigation.navigate("HomeNavigator");
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
             telefono: "",
         },
-        validate,
-        onSubmit: (x) => console.warn(x),
+        validationSchema,
+        onSubmit: onSubmit,
     });
 
+    if (loading) return null;
+    if (error) return <>{Toast("Error")}</>;
+
     return (
-        <View style={{ ...styles.mainContainer }}>
-            <Text style={{ ...styles.title, ...styles.setMargin }}>
-                Nuevo Telefono
-            </Text>
+        <ContenedorEstandar>
+            <TituloCampo label="nuevo telefono" />
             <TextInput
                 onChangeText={formik.handleChange("telefono")}
                 value={formik.values.telefono}
@@ -38,46 +72,29 @@ export default function FormularioNuevoTelefono() {
                 keyboardType="number-pad"
                 style={{ ...styles.input, ...styles.setMargin }}
                 placeholderTextColor="#7a7a7a"
+                onBlur={formik.handleBlur("telefono")}
             />
-            {formik.errors.telefono ? (
-                <Text>{formik.errors.telefono}</Text>
+            {formik.errors.telefono && formik.touched.telefono ? (
+                <Text style={{ ...styles.warning }}>
+                    {formik.errors.telefono}
+                </Text>
             ) : null}
-            <Boton
-                tcolor="#ffffff"
-                bg={BLACK_COLOR}
-                onSubmit={formik.handleSubmit}
-                tzise={18}
-            >
-                Agregar
-            </Boton>
-        </View>
+            <TituloCampo label="tipo de telefono" />
+            <View style={{ width: "80%", marginVertical: 0 }}>
+                <RadioButtonGroup
+                    PROP={data.getPhoneTypes.types}
+                    selected={setTipo}
+                />
+            </View>
+            <View style={{ marginTop: 20 }}>
+                <Boton
+                    tcolor="#ffffff"
+                    bg={BLACK_COLOR}
+                    onSubmit={formik.handleSubmit}
+                    tzise={18}
+                    label="Agregar"
+                />
+            </View>
+        </ContenedorEstandar>
     );
 }
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#ffffff",
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: "bold",
-        color: BLACK_COLOR,
-    },
-    input: {
-        width: "80%",
-        height: 50,
-        textAlign: "center",
-        textAlignVertical: "center",
-        color: BLACK_COLOR,
-        backgroundColor: "#efefef",
-        fontSize: 18,
-        borderRadius: 3,
-        fontWeight: "bold",
-    },
-    setMargin: {
-        marginBottom: 15,
-    },
-});

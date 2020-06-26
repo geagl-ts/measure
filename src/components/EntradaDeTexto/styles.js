@@ -20,6 +20,17 @@ export const styles = StyleSheet.create({
     bigFont: {
         fontSize: 26,
     },
+    grayType: {
+        width: "80%",
+        height: 50,
+        textAlign: "center",
+        textAlignVertical: "center",
+        color: "#2a2a2a",
+        backgroundColor: "#efefef",
+        fontSize: 20,
+        borderRadius: 3,
+        fontWeight: "bold",
+    },
 });
 
 //underline style
@@ -35,6 +46,10 @@ export const styleInput = (style) => {
             return {
                 ...styles.textInput,
                 ...styles.bigFont,
+            };
+        case "gray-input":
+            return {
+                ...styles.grayType,
             };
         default:
             return styles.textInput;

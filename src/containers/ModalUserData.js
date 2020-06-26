@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Header, SubHeader, Boton } from "../components";
+import { Header, SubHeader } from "../components";
 
 import { List, ContentItemList } from "../components/ListComponents";
 
@@ -13,7 +13,7 @@ const ModalDeCliente = ({ data, navigation }) => {
 
     const agregarTelefono = () => {
         setActive(!active);
-        navigation.navigate("FormularioTelefono");
+        navigation.navigate("FormularioTelefono", { clientid: data.id });
     };
 
     return (

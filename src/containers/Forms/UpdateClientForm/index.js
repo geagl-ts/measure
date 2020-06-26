@@ -5,14 +5,10 @@ import { gql } from "apollo-boost";
 //mis componentes
 import {
     ContenedorEstandar,
-    Titulo,
     EntradaDeTexto,
     Boton,
-    Separador,
+    TituloCampo,
 } from "../../../components";
-
-//constantes
-import { COLOR_ESTANDAR, PLACEHOLDER_COLOR_ESTANDAR } from "./LocalVariables";
 
 //Mutations
 import updateClient from "./Graphql/updateClient";
@@ -64,20 +60,20 @@ const UpdateClientForm = ({ route, navigation }) => {
 
     return (
         <ContenedorEstandar>
-            <Titulo color={COLOR_ESTANDAR}>Nuevo Nombre</Titulo>
-            <Separador mv={15}>
-                <EntradaDeTexto
-                    placeholder="escriba el nombre"
-                    styleInput="big-font"
-                    color={COLOR_ESTANDAR}
-                    phcolor={PLACEHOLDER_COLOR_ESTANDAR}
-                    onChangeText={onChangeNameField}
-                    value={name}
-                />
-            </Separador>
-            <Boton bg={COLOR_ESTANDAR} tcolor={"#fff"} onSubmit={onSubmit}>
-                cambiar
-            </Boton>
+            <TituloCampo label="nuevo nombre" />
+            <EntradaDeTexto
+                placeholder="escriba el nombre"
+                styleInput="gray-input"
+                onChangeText={onChangeNameField}
+                value={name}
+            />
+            <Boton
+                tcolor={"#fff"}
+                onSubmit={onSubmit}
+                tzise={18}
+                label="cambiar"
+                containerStyles={{ marginTop: 20 }}
+            />
         </ContenedorEstandar>
     );
 };
