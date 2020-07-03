@@ -1,48 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import { AsyncStorage } from "react-native";
 import App from "./src";
 
-//apollo integration
-//import ApolloClient from "apollo-boost";
+// Integracion con graphql
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-client-preset";
 import { ApolloProvider } from "@apollo/react-hooks";
+import { setContext } from "apollo-link-context";
 
-uri = (tipo = "test") => {
-    return tipo === "final"
-        ? "https://measure-app.herokuapp.com/graphql"
-        : "http://localhost:4000/";
-};
+// Asignacion del token
+import { getToken } from "./token";
 
-const client = (authorization) => {
-    return new ApolloClient({
-        link: new HttpLink({
-            uri: uri("final"),
-            headers: {
-                authorization,
-            },
-        }),
-        cache: new InMemoryCache(),
-    });
-};
+const httpLink = new HttpLink({
+    uri: "https://measure-app.herokuapp.com/graphql",
+});
+const authLink = setContext(async (req, { headers }) => {
+    const token = await getToken();
+    return {
+        ...headers,
+        headers: {
+            authorization: token ? token : "",
+        },
+    };
+});
+const link = authLink.concat(httpLink);
+
+// Generacion del cliente
+const client = new ApolloClient({
+    link,
+    cache: new InMemoryCache(),
+});
 
 export default () => {
-    const [token, setToken] = useState("");
-
-    useEffect(() => {
-        const getToken = async () => {
-            const token = await AsyncStorage.getItem("Token");
-            if (token) {
-                setToken(token);
-            }
-        };
-
-        getToken();
-    }, []);
-
     return (
-        <ApolloProvider client={client(token)}>
+        <ApolloProvider client={client}>
             <NavigationContainer>
                 <App />
             </NavigationContainer>

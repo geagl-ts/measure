@@ -17,6 +17,7 @@
         "@use-expo/font": "^2.0.0",
         "apollo-boost": "^0.4.7",
         "apollo-client-preset": "^1.0.8",
+        "apollo-link-context": "^1.0.20",
         "expo": "~37.0.3",
         "expo-linear-gradient": "~8.1.0",
         "formik": "^2.1.4",

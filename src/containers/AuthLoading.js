@@ -54,7 +54,7 @@ const AuthLoading = ({ navigation }) => {
             if (tokenSession) {
                 navigation.navigate("HomeNavigator");
             } else {
-                navigation.navigate("Login");
+                navigation.navigate("LoginRegistro");
             }
         });
 

@@ -8,6 +8,7 @@ import {
     NuevoCliente,
     UpdateClientForm,
     NuevoTelefono,
+    LoginRegistro,
 } from "./containers";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -72,8 +73,7 @@ const StackNavigator = () => {
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name="AuthLoading" component={AuthLoading} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="LoginRegistro" component={LoginRegistro} />
             <Stack.Screen name="HomeNavigator" component={BottomNavigator} />
             <Stack.Screen name="NuevoCliente" component={NuevoCliente} />
             <Stack.Screen name="FormularioTelefono" component={NuevoTelefono} />
