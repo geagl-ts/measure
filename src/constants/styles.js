@@ -20,3 +20,10 @@ export const regular_shadow = {
 
     elevation: 5,
 };
+
+export const keyboard_avoiding = {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+};

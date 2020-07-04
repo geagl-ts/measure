@@ -1,11 +1,11 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Imagen, BotonCerrarSesion } from "./Componentes";
 import { Text } from "react-native";
 
 import { styles } from "./Styles/styles";
 import { OBTENER_USUARIO } from "./Graphql/Query";
-import { ContenedorEstandar } from "../../components";
+import { BotonCerrarSesion } from "./Componentes";
+import { ContenedorEstandar, Imagen } from "../../components";
 
 export default function index(props) {
     const {
@@ -21,7 +21,7 @@ export default function index(props) {
 
         return (
             <ContenedorEstandar>
-                <Imagen />
+                <Imagen source={require("../../../assets/signin.png")} />
                 <Text style={{ ...styles.correo }}>{usuario.email}</Text>
                 <BotonCerrarSesion navigation={props.navigation} />
             </ContenedorEstandar>

@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, Platform, AsyncStorage } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { LOGIN, REGISTRO } from "./Graphql/Mutation";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
-import { ContenedorEstandar } from "../../components";
 
 import Toast from "../../features/messageInScreen";
 
 // TOKEN
 import { setToken } from "../../../token";
 
+// Componenetes globales
+import { ContenedorEstandar, Cargando, Imagen } from "../../components";
+
 // Componentes locales
-import { Imagen, Formulario } from "./Componentes";
+import { Formulario } from "./Componentes";
 
 // Styles
 import { styles } from "./styles";
@@ -22,7 +24,7 @@ import validaciones from "./validaciones";
 export default function LoginRegistro({ navigation }) {
     const [isLogin, setLogin] = useState(true);
     const [loading, setLoading] = useState(false);
-    initialValues = { email: "elisa@gmail.com", password: "elisa" };
+    const initialValues = { email: "elisa@gmail.com", password: "elisa" };
 
     const [login] = useMutation(LOGIN);
     const [register] = useMutation(REGISTRO);
@@ -58,7 +60,8 @@ export default function LoginRegistro({ navigation }) {
     if (loading)
         return (
             <ContenedorEstandar>
-                <Imagen />
+                <Imagen source={require("../../../assets/signin.png")} />
+                <Cargando />
             </ContenedorEstandar>
         );
 
@@ -68,7 +71,7 @@ export default function LoginRegistro({ navigation }) {
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{ ...styles.keyboard_avoiding }}
             >
-                <Imagen />
+                <Imagen source={require("../../../assets/signin.png")} />
                 <Formik
                     onSubmit={onSubmitForm}
                     validationSchema={
