@@ -21,7 +21,7 @@ const UPDATE_CLIENT = gql`
 //main component
 const UpdateClientForm = ({ route, navigation }) => {
     //variable para el nuevo nombre
-    const [name, setName] = React.useState("");
+    const [name, setName] = React.useState(route.params.name);
 
     //implementacion de la mutacion
     const [updateClient] = useMutation(UPDATE_CLIENT);

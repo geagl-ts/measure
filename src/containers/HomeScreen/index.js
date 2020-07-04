@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Alert } from "react-native";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { ConfirmDialog } from "../../components";
 import Toast from "../../features/messageInScreen";
 import {
     Contenedor,
@@ -32,26 +32,36 @@ export default function index(props) {
 
     const onDelete = async (clientId) => {
         try {
-            if (!ConfirmDialog()) return Toast("De acuerdo");
-
-            const {
-                data: {
-                    removeClient: { message: msg },
+            Alert.alert("Confirmacion", "Estas seguro?", [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
                 },
-            } = await removeClient({
-                variables: {
-                    clientId,
+                {
+                    text: "Confirmar",
+                    onPress: async () => {
+                        const {
+                            data: {
+                                removeClient: { message: msg },
+                            },
+                        } = await removeClient({
+                            variables: {
+                                clientId,
+                            },
+                        });
+
+                        const noValidas = ["error", "No debes estar aqui"];
+
+                        if (noValidas.includes(msg)) {
+                            Toast(msg);
+                        } else {
+                            Toast(msg);
+                            const { data } = await refetch();
+                            setClientes(data.getUser.userData.clients);
+                        }
+                    },
                 },
-            });
-
-            const noValidas = ["error", "No debes estar aqui"];
-
-            if (noValidas.includes(msg)) {
-                Toast(msg);
-                refetch();
-            } else {
-                Toast(msg);
-            }
+            ]);
         } catch (e) {
             Toast("No se que paso");
         }
@@ -81,6 +91,7 @@ export default function index(props) {
                         update={() =>
                             navigate("UpdateClientForm", {
                                 clientId: cliente.id,
+                                name: cliente.name,
                             })
                         }
                     />

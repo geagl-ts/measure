@@ -6,7 +6,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "push": "git add . && git commit -m \"El nuevo componente para agregar a un cliente esta listo, solo falta conectarlo\" && git push"
+        "push": "git add . && git commit -m \"Ya se pueden eliminar y actualizar clientes\" && git push"
     },
     "dependencies": {
         "@apollo/react-hooks": "^3.1.5",

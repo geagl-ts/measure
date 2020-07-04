@@ -3,17 +3,24 @@ import { KeyboardAvoidingView } from "react-native";
 import { Formik } from "formik";
 
 // Graphql
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_USUARIO_TELEFONOS } from "./Graphql/Query";
+import { AGREGAR_NUEVO_CLIENTE } from "./Graphql/Mutation";
 // Componentes Locales
 import Formulario from "./Componentes/Formulario";
 // Componentes Globales
 import { ContenedorEstandar, Imagen } from "../../../components";
 // Estilos globales
 import { keyboard_avoiding } from "../../../constants/styles";
+// Funciones
+import FormatearVariables from "./Funciones/FormatearVariables";
+import Toast from "../../../features/messageInScreen";
+// Validaciones
+import schemaClienteValido from "./Validaciones/NuevoCliente";
 
-export default () => {
+export default ({ navigation: { navigate } }) => {
     const { data, loading } = useQuery(GET_USUARIO_TELEFONOS);
+    const [addClient] = useMutation(AGREGAR_NUEVO_CLIENTE);
 
     if (loading) return null;
 
@@ -26,14 +33,33 @@ export default () => {
         waist: "",
     };
 
-    const handleSubmit = (valores) => {
-        console.log(valores);
+    const handleSubmit = async (valores) => {
+        try {
+            console.log(valores);
+
+            const { data: addClientResponse } = await addClient({
+                variables: FormatearVariables.variablesUsuario(valores),
+            });
+
+            if (!addClientResponse.addClient.success) {
+                Toast(addClientResponse.addClient.message);
+            } else {
+                Toast(addClientResponse.addClient.message);
+                navigate("HomeNavigator");
+            }
+        } catch (e) {
+            Toast("Ya existe un cliente con ese nombre");
+        }
     };
 
     return (
         <ContenedorEstandar>
             <Imagen source={require("../../../../assets/signin.png")} />
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validationSchema={schemaClienteValido}
+            >
                 <KeyboardAvoidingView
                     behavior="padding"
                     style={{ ...keyboard_avoiding }}
