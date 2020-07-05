@@ -24,7 +24,7 @@ import validaciones from "./validaciones";
 export default function LoginRegistro({ navigation }) {
     const [isLogin, setLogin] = useState(true);
     const [loading, setLoading] = useState(false);
-    const initialValues = { email: "elisa@gmail.com", password: "elisa" };
+    const initialValues = { email: "", password: "" };
 
     const [login] = useMutation(LOGIN);
     const [register] = useMutation(REGISTRO);
