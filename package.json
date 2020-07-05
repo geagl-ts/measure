@@ -6,7 +6,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "push": "git add . && git commit -m \"Limpie los inputs del login\" && git push"
+        "push": "git add . && git commit -m \"Soluciones el error para ir a crear un nuevo usuario\" && git push"
     },
     "dependencies": {
         "@apollo/react-hooks": "^3.1.5",
