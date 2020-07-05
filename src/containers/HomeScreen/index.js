@@ -69,7 +69,8 @@ export default function index(props) {
 
     if (loading) return null;
 
-    const navigate = (nombre, args) => props.navigation.navigate(nombre, args);
+    const navigateTo = (nombre, args) =>
+        props.navigation.navigate(nombre, args);
 
     return (
         <Contenedor>
@@ -89,7 +90,7 @@ export default function index(props) {
                             onDelete(cliente.id);
                         }}
                         update={() =>
-                            navigate("UpdateClientForm", {
+                            navigateTo("UpdateClientForm", {
                                 clientId: cliente.id,
                                 name: cliente.name,
                             })

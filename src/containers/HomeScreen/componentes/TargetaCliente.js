@@ -5,7 +5,7 @@ import ModalDeUsuario from "../../ModalUserData";
 
 import { shadow } from "../../../constants/styles";
 
-const BotonDeTargeta = (props) => {
+const BotonDeTarjeta = (props) => {
     return (
         <TouchableOpacity
             onPress={props.onSubmit}
@@ -38,7 +38,7 @@ export default function TargetaCliente(props) {
                             ...styles.botonera,
                         }}
                     >
-                        <BotonDeTargeta
+                        <BotonDeTarjeta
                             label="Eliminar"
                             onSubmit={props.delete}
                         >
@@ -47,8 +47,8 @@ export default function TargetaCliente(props) {
                                 size={32}
                                 color="#2ba6ff"
                             />
-                        </BotonDeTargeta>
-                        <BotonDeTargeta
+                        </BotonDeTarjeta>
+                        <BotonDeTarjeta
                             label="Actualizar"
                             onSubmit={props.update}
                         >
@@ -57,7 +57,7 @@ export default function TargetaCliente(props) {
                                 size={33}
                                 color="#2ba6ff"
                             />
-                        </BotonDeTargeta>
+                        </BotonDeTarjeta>
                     </View>
                 </View>
             </View>

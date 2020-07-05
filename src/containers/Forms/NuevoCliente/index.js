@@ -35,8 +35,6 @@ export default ({ navigation: { navigate } }) => {
 
     const handleSubmit = async (valores) => {
         try {
-            console.log(valores);
-
             const { data: addClientResponse } = await addClient({
                 variables: FormatearVariables.variablesUsuario(valores),
             });

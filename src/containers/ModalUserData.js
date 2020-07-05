@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+    Modal,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+    Linking,
+} from "react-native";
 import { Header, SubHeader } from "../components";
 
 import { List, ContentItemList } from "../components/ListComponents";
@@ -172,7 +179,14 @@ const VistaAntesDelModal = ({ data, onSubmit }) => {
 const ListaTelefonos = ({ telefonos, onSubmit }) => {
     const Items = ({ item }) => (
         <View key={item.id}>
-            <ContentItemList bold={true}>{item.phone}</ContentItemList>
+            <TouchableOpacity
+                activeOpacity={0.4}
+                onPress={() => {
+                    Linking.openURL(`tel:${item.phone}`);
+                }}
+            >
+                <ContentItemList bold={true}>{item.phone}</ContentItemList>
+            </TouchableOpacity>
             <ContentItemList>
                 {item.isMain ? "Principal" : "Normal"}
             </ContentItemList>
