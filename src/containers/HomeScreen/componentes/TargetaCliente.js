@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import ModalDeUsuario from "../../ModalUserData";
+// import ModalDeUsuario from "../../ModalUserData";
+import ModalDeUsuario from "../../ModalCliente";
 
 import { shadow } from "../../../constants/styles";
 
@@ -28,7 +29,7 @@ export default function TargetaCliente(props) {
             <View style={{ ...shadow, ...styles.content }}>
                 <View style={{ ...styles.datos_principales }}>
                     <ModalDeUsuario
-                        data={props.data}
+                        cliente={props.data}
                         navigation={props.navigation}
                     />
                 </View>

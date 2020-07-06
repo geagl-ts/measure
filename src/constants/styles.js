@@ -27,3 +27,8 @@ export const keyboard_avoiding = {
     justifyContent: "center",
     alignItems: "center",
 };
+
+export const center_component = {
+    justifyContent: "center",
+    alignItems: "center",
+};
