@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     boton: {
         position: "absolute",
         right: 20,
-        top: 10,
+        top: 8.8,
     },
     texto_boton: {
         fontSize: 20,

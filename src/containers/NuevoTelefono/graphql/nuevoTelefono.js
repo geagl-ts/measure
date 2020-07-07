@@ -6,6 +6,8 @@ export default `
             client: $client
         }){
             message
+            success
+            error
         }
     }
 `;

@@ -6,7 +6,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "push": "git add . && git commit -m \"El modal del cliente ya esta remodelado\" && git push"
+        "push": "git add . && git commit -m \"La aplicacion ya elimina telefonos\" && git push"
     },
     "dependencies": {
         "@apollo/react-hooks": "^3.1.5",

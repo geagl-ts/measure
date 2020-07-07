@@ -1,20 +1,46 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useMutation } from "@apollo/react-hooks";
+import { Feather } from "@expo/vector-icons";
 
 import { BLUE_COLOR } from "../../../constants/colors";
-import { Boton } from "../../../components";
 import { ScrollView } from "react-native-gesture-handler";
+import fun from "../funciones";
+import { ELIMINAR_TELEFONO } from "../graphql/Mutation";
 
 export default function Lista(props) {
+    const [eliminarTelefono] = useMutation(ELIMINAR_TELEFONO);
+
     return (
         <View style={{ ...styles.contenedor }}>
             <ScrollView>
                 {props.telefonos.map(({ id, isMain, phone }) => (
                     <View key={id} style={{ ...styles.item }}>
                         <Text style={{ ...styles.cabecera }}>{phone}</Text>
-                        <Text style={{ ...styles.informacion }}>
-                            {isMain ? "Principal" : "activo"}
-                        </Text>
+                        <View style={{ ...styles.eliminar_telefono }}>
+                            <Text style={{ ...styles.informacion }}>
+                                {isMain ? "Nuevo" : "Anterior"}
+                            </Text>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    fun.eliminarTelefono(
+                                        eliminarTelefono,
+                                        {
+                                            telefonoId: id,
+                                            clienteId: props.clienteId,
+                                        },
+                                        props.navigate,
+                                        props.modalState
+                                    )
+                                }
+                            >
+                                <Feather
+                                    name="trash-2"
+                                    size={30}
+                                    color="#2ba6ff"
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 ))}
             </ScrollView>
@@ -43,5 +69,10 @@ const styles = StyleSheet.create({
     informacion: {
         fontSize: 20,
         color: BLUE_COLOR,
+    },
+    eliminar_telefono: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginBottom: 5,
     },
 });

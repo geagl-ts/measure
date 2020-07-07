@@ -45,9 +45,12 @@ export default function FormularioNuevoTelefono({ route, navigation }) {
             const { data: infoNuevoTelefono } = await addPhone({
                 variables: datosOrganizados,
             });
-
-            Toast(infoNuevoTelefono.addPhone.message);
-            navigation.navigate("HomeNavigator");
+            if (!infoNuevoTelefono.addPhone.error) {
+                Toast(infoNuevoTelefono.addPhone.message);
+                navigation.navigate("AuthLoading");
+            } else {
+                Toast(infoNuevoTelefono.addPhone.error);
+            }
         }
     };
 

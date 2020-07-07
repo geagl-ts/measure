@@ -15,9 +15,11 @@ export default function VistaPrevia({ cliente, ...props }) {
         <>
             <TouchableOpacity activeOpacity={0.5} onPress={props.onSubmit}>
                 <Text style={{ ...styles.texto }}>{cliente.name}</Text>
-                <Text style={{ ...styles.numero }}>
-                    {data.getMainPhone.phone.phone}
-                </Text>
+                {data.getMainPhone.phone ? (
+                    <Text style={{ ...styles.numero }}>
+                        {data.getMainPhone.phone.phone}
+                    </Text>
+                ) : null}
             </TouchableOpacity>
         </>
     );

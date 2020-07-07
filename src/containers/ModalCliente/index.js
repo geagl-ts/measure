@@ -1,10 +1,7 @@
 import React from "react";
-import { Text, View, Modal, Linking, TouchableOpacity } from "react-native";
+import { Modal, Linking } from "react-native";
 
-import styles from "./styles";
 import fun from "./funciones";
-import { Boton, ContenedorEstandar } from "../../components";
-import { BLUE_COLOR } from "../../constants/colors";
 import {
     ModalCliente,
     VistaPrevia,
@@ -38,7 +35,12 @@ export default function index({ navigation: { navigate }, cliente, ...props }) {
                                 cliente.id
                             )}
                         >
-                            <ListaTelefonos telefonos={cliente.phones} />
+                            <ListaTelefonos
+                                telefonos={cliente.phones}
+                                clienteId={cliente.id}
+                                navigate={navigate}
+                                modalState={modalState}
+                            />
                         </Dato>
                         <Dato label="Medidas">
                             <ListaMedidas medidas={cliente.measures} />
