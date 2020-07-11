@@ -16,4 +16,15 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         ...CENTER_CONTENT,
     },
+    scroll_container: {
+        width: "100%",
+    },
+    scroll_content: {
+        flexGrow: 1,
+    },
+    contenido_view: {
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
 });

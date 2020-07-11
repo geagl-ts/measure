@@ -1,12 +1,14 @@
 {
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
+        "emulator": "emulator -avd emulador1",
         "start": "expo start",
         "android": "expo start --android",
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "push": "git add . && git commit -m \"La aplicacion ya elimina telefonos\" && git push"
+        "push": "git add . && git commit -m \"La aplicacion ya agrega medidas\" && git push",
+        "updateExpo": "yarn global add expo-cli"
     },
     "dependencies": {
         "@apollo/react-hooks": "^3.1.5",
@@ -27,6 +29,7 @@
         "react-dom": "~16.9.0",
         "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
         "react-native-gesture-handler": "~1.6.0",
+        "react-native-keyboard-aware-scroll-view": "^0.9.1",
         "react-native-reanimated": "~1.7.0",
         "react-native-safe-area-context": "0.7.3",
         "react-native-screens": "~2.2.0",

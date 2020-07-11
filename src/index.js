@@ -1,14 +1,13 @@
 import React from "react";
 import {
-    Login,
     About,
     Home,
-    SignUp,
     AuthLoading,
     NuevoCliente,
     UpdateClientForm,
     NuevoTelefono,
     LoginRegistro,
+    NuevaMedida,
 } from "./containers";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -81,6 +80,7 @@ const StackNavigator = () => {
                 name="UpdateClientForm"
                 component={UpdateClientForm}
             />
+            <Stack.Screen name="NuevaMedidaScreen" component={NuevaMedida} />
         </Stack.Navigator>
     );
 };

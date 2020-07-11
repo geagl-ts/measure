@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         borderBottomWidth: 1,
         borderBottomColor: "#cfcfcf",
-        flexDirection: "row",
-        justifyContent: "space-around",
     },
     cabecera: {
         fontSize: 24,

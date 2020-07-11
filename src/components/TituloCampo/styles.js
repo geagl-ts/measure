@@ -7,10 +7,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: "bold",
         color: BLACK_COLOR,
-        textTransform: "capitalize",
-    },
-    setMargin: {
-        marginBottom: 15,
+        textTransform: "lowercase",
     },
 });
 

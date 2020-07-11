@@ -32,3 +32,15 @@ export const center_component = {
     justifyContent: "center",
     alignItems: "center",
 };
+
+export const input = {
+    width: "80%",
+    height: 50,
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#2a2a2a",
+    backgroundColor: "#efefef",
+    fontSize: 20,
+    borderRadius: 3,
+    fontWeight: "bold",
+};

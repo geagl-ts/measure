@@ -1,4 +1,5 @@
 import React from "react";
+import { ScrollView, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { Contenido } from "./Componentes";
@@ -16,7 +17,14 @@ const index = ({ children }) => {
             colors={[PRIMER_COLOR_GRADIENTE, SEGUNDO_COLOR_GRADIENTE]}
             style={{ ...styles.container }}
         >
-            <Contenido>{children}</Contenido>
+            <Contenido>
+                <ScrollView
+                    style={{ ...styles.scroll_container }}
+                    contentContainerStyle={{ ...styles.scroll_content }}
+                >
+                    <View style={{ ...styles.contenido_view }}>{children}</View>
+                </ScrollView>
+            </Contenido>
         </LinearGradient>
     );
 };

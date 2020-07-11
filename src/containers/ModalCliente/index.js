@@ -42,8 +42,21 @@ export default function index({ navigation: { navigate }, cliente, ...props }) {
                                 modalState={modalState}
                             />
                         </Dato>
-                        <Dato label="Medidas">
-                            <ListaMedidas medidas={cliente.measures} />
+                        <Dato
+                            label="Medidas"
+                            btnLabel="Agregar"
+                            callback={fun.agregarMedidas(
+                                navigate,
+                                modalState,
+                                cliente.id
+                            )}
+                        >
+                            <ListaMedidas
+                                medidas={cliente.measures}
+                                clienteId={cliente.id}
+                                navigate={navigate}
+                                modalState={modalState}
+                            />
                         </Dato>
                     </Informacion>
                 </ModalCliente>

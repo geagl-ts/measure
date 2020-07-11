@@ -39,9 +39,19 @@ const eliminarTelefono = (eliminarTelefono, data, navigate, modalState) => {
     }
 };
 
+const ocultarModal = (modal) => {
+    modal[1](!modal[0]);
+};
+
+const agregarMedidas = (navigate, modal, clientId) => () => {
+    navigate("NuevaMedidaScreen", { clientId });
+    ocultarModal(modal);
+};
+
 export default {
     cerrarModal,
     agregarTelefono,
     abrirModal,
     eliminarTelefono,
+    agregarMedidas,
 };
