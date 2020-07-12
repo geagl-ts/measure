@@ -9,6 +9,7 @@ import {
     Contenido,
     TargetaCliente,
 } from "./componentes";
+import { Cargando } from "../../components";
 
 import { GET_USER } from "./graphql/queries";
 import { REMOVE_CLIENT } from "./graphql/mutations";
@@ -67,8 +68,6 @@ export default function index(props) {
         }
     };
 
-    if (loading) return null;
-
     const navigateTo = (nombre, args) =>
         props.navigation.navigate(nombre, args);
 
@@ -81,22 +80,26 @@ export default function index(props) {
                 value={searchValue}
             />
             <Contenido>
-                {clientes.filter(isSearched(searchValue)).map((cliente) => (
-                    <TargetaCliente
-                        key={cliente.id}
-                        data={cliente}
-                        navigation={props.navigation}
-                        delete={() => {
-                            onDelete(cliente.id);
-                        }}
-                        update={() =>
-                            navigateTo("UpdateClientForm", {
-                                clientId: cliente.id,
-                                name: cliente.name,
-                            })
-                        }
-                    />
-                ))}
+                {loading ? (
+                    <Cargando />
+                ) : (
+                    clientes.filter(isSearched(searchValue)).map((cliente) => (
+                        <TargetaCliente
+                            key={cliente.id}
+                            data={cliente}
+                            navigation={props.navigation}
+                            delete={() => {
+                                onDelete(cliente.id);
+                            }}
+                            update={() =>
+                                navigateTo("UpdateClientForm", {
+                                    clientId: cliente.id,
+                                    name: cliente.name,
+                                })
+                            }
+                        />
+                    ))
+                )}
             </Contenido>
         </Contenedor>
     );

@@ -7,7 +7,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
-        "push": "git add . && git commit -m \"La aplicacion ya elimina medidas\" && git push",
+        "push": "git add . && git commit -m \"La aplicacion ya tiene pantallas de carga\" && git push",
         "updateExpo": "yarn global add expo-cli"
     },
     "dependencies": {
