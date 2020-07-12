@@ -19,7 +19,13 @@ export default function VistaPrevia({ cliente, ...props }) {
                     <Text style={{ ...styles.numero }}>
                         {data.getMainPhone.phone.phone}
                     </Text>
-                ) : null}
+                ) : (
+                    <Text style={{ ...styles.numero }}>
+                        {cliente.phones.length > 0
+                            ? cliente.phones[cliente.phones.length - 1].phone
+                            : "Numero no disponible"}
+                    </Text>
+                )}
             </TouchableOpacity>
         </>
     );
