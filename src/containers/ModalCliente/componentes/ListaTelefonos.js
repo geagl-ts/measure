@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useMutation } from "@apollo/react-hooks";
-import { Feather } from "@expo/vector-icons";
+import { BotonIcono } from "../../../components";
 
 import { BLUE_COLOR } from "../../../constants/colors";
 import { ScrollView } from "react-native-gesture-handler";
@@ -17,29 +17,24 @@ export default function Lista(props) {
                 {props.telefonos.map(({ id, isMain, phone }) => (
                     <View key={id} style={{ ...styles.item }}>
                         <Text style={{ ...styles.cabecera }}>{phone}</Text>
-                        <View style={{ ...styles.eliminar_telefono }}>
-                            <Text style={{ ...styles.informacion }}>
-                                {isMain ? "Nuevo" : "Anterior"}
-                            </Text>
-                            <TouchableOpacity
-                                onPress={() =>
+                        <Text style={{ ...styles.informacion }}>
+                            {isMain ? "Nuevo" : "Anterior"}
+                        </Text>
+                        <View style={{ ...styles.botonera }}>
+                            <BotonIcono
+                                label="Eliminar"
+                                iconName="trash-2"
+                                callback={() =>
                                     fun.eliminarTelefono(
                                         eliminarTelefono,
                                         {
                                             telefonoId: id,
                                             clienteId: props.clienteId,
                                         },
-                                        props.navigate,
-                                        props.modalState
+                                        props
                                     )
                                 }
-                            >
-                                <Feather
-                                    name="trash-2"
-                                    size={30}
-                                    color="#2ba6ff"
-                                />
-                            </TouchableOpacity>
+                            />
                         </View>
                     </View>
                 ))}
@@ -70,9 +65,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: BLUE_COLOR,
     },
-    eliminar_telefono: {
-        justifyContent: "space-between",
+    botonera: {
+        justifyContent: "space-around",
         flexDirection: "row",
         marginBottom: 5,
+        borderTopWidth: 1,
+        borderTopColor: "#cfcfcf",
     },
 });

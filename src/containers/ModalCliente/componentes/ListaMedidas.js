@@ -1,8 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useMutation } from "@apollo/react-hooks";
+import { BotonIcono } from "../../../components";
 
 import { BLUE_COLOR } from "../../../constants/colors";
 import { ScrollView } from "react-native-gesture-handler";
+
+import fun from "../funciones";
+import { ELIMINAR_MEDIDA } from "../graphql/Mutation";
 
 const Informacion = ({ label, valor }) => {
     return (
@@ -13,6 +18,8 @@ const Informacion = ({ label, valor }) => {
 };
 
 export default function Lista(props) {
+    const [eliminarMedida] = useMutation(ELIMINAR_MEDIDA);
+
     return (
         <View style={{ ...styles.contenedor }}>
             <ScrollView>
@@ -20,6 +27,19 @@ export default function Lista(props) {
                     <View key={id} style={{ ...styles.item }}>
                         <Informacion label="Altura" valor={height} />
                         <Informacion label="Cintura" valor={waist} />
+                        <View style={{ ...styles.botonera }}>
+                            <BotonIcono
+                                label="Eliminar"
+                                iconName="trash-2"
+                                callback={() =>
+                                    fun.eliminarMedida(
+                                        id,
+                                        eliminarMedida,
+                                        props
+                                    )
+                                }
+                            />
+                        </View>
                     </View>
                 ))}
             </ScrollView>
@@ -48,5 +68,12 @@ const styles = StyleSheet.create({
     informacion: {
         fontSize: 20,
         color: "#2a2a2a",
+    },
+    botonera: {
+        justifyContent: "space-around",
+        flexDirection: "row",
+        marginBottom: 5,
+        borderTopWidth: 1,
+        borderTopColor: "#cfcfcf",
     },
 });

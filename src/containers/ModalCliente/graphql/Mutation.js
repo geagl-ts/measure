@@ -10,3 +10,13 @@ export const ELIMINAR_TELEFONO = gql`
         }
     }
 `;
+
+export const ELIMINAR_MEDIDA = gql`
+    mutation eliminarMedida($medidasId: ID!, $clienteId: ID!) {
+        deleteMeasure(medidasId: $medidasId, clienteId: $clienteId) {
+            message
+            success
+            error
+        }
+    }
+`;

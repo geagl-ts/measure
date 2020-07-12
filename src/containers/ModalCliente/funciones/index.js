@@ -16,7 +16,9 @@ const agregarTelefono = (navigate, modalState, clientid) => () => {
     navigate("FormularioTelefono", { clientid });
 };
 
-const eliminarTelefono = (eliminarTelefono, data, navigate, modalState) => {
+const eliminarTelefono = (eliminarTelefono, data, props) => {
+    const { navigate, modalState } = props;
+
     try {
         Alert.alert("Confirmar", "Esta seguro?", [
             {
@@ -48,10 +50,44 @@ const agregarMedidas = (navigate, modal, clientId) => () => {
     ocultarModal(modal);
 };
 
+const eliminarMedida = async (medidasId, eliminar, props) => {
+    try {
+        const { modalState, navigate, clienteId } = props;
+
+        Alert.alert("Confirmar", "Esta seguro?", [
+            {
+                text: "cancelar",
+            },
+            {
+                text: "confirmar",
+                onPress: async () => {
+                    const { data } = await eliminar({
+                        variables: {
+                            medidasId,
+                            clienteId,
+                        },
+                    });
+
+                    if (data.deleteMeasure.success) {
+                        navigate("AuthLoading");
+                        ocultarModal(modalState);
+                        Toast(data.deleteMeasure.message);
+                    } else {
+                        Toast(data.deleteMeasure.error);
+                    }
+                },
+            },
+        ]);
+    } catch (e) {
+        Toast("Ando trabajando en eso, disculpa");
+    }
+};
+
 export default {
     cerrarModal,
     agregarTelefono,
     abrirModal,
     eliminarTelefono,
     agregarMedidas,
+    eliminarMedida,
 };
