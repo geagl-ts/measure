@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Linking,
+} from "react-native";
 import { useMutation } from "@apollo/react-hooks";
 import { BotonIcono } from "../../../components";
 
@@ -16,20 +22,22 @@ export default function Lista(props) {
             <ScrollView>
                 {props.telefonos.map(({ id, isMain, phone }) => (
                     <View key={id} style={{ ...styles.item }}>
-                        <Text style={{ ...styles.cabecera }}>{phone}</Text>
+                        <TouchableOpacity
+                            onPress={() => Linking.openURL(`tel:${phone}`)}
+                        >
+                            <Text style={{ ...styles.cabecera }}>{phone}</Text>
+                        </TouchableOpacity>
                         <Text style={{ ...styles.informacion }}>
                             {isMain ? "Nuevo" : "Anterior"}
                         </Text>
                         <View style={{ ...styles.botonera }}>
                             <BotonIcono
-                                label="Actualizar"
                                 iconName="edit-3"
                                 callback={() =>
                                     fun.actualizarTelefono(props, phone, id)
                                 }
                             />
                             <BotonIcono
-                                label="Eliminar"
                                 iconName="trash-2"
                                 callback={() =>
                                     fun.eliminarTelefono(

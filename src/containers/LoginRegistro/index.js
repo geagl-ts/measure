@@ -24,36 +24,41 @@ import validaciones from "./validaciones";
 export default function LoginRegistro({ navigation }) {
     const [isLogin, setLogin] = useState(true);
     const [loading, setLoading] = useState(false);
-    const initialValues = { email: "", password: "" };
+    let initialValues = {
+        email: "",
+        password: "",
+    };
 
     const [login] = useMutation(LOGIN);
     const [register] = useMutation(REGISTRO);
 
     const onSubmitForm = async (values) => {
-        setLoading(true);
         if (isLogin) {
             const { data } = await login({ variables: values });
 
             if (!data.login.user) {
                 Toast(data.login.message);
             } else {
+                setLoading(true);
                 await setToken(data.login.user.token);
                 navigation.navigate("HomeNavigator");
+                setLoading(false);
             }
-            setLoading(data.login.loading);
         } else {
             const { data } = await register({ variables: values });
 
-            msg = data.register.message;
-            if (msg !== "Registro exitoso") {
-                Toast(msg);
-            } else {
-                Toast(msg);
-                initialValues = values;
+            if (data.register.message === "Registro exitoso") {
+                setLoading(true);
+                Toast(data.register.message);
                 setLogin(true);
+                initialValues = {
+                    email: "",
+                    password: "",
+                };
+                setLoading(false);
+            } else {
+                Toast(data.register.message);
             }
-            console.log(data);
-            setLoading(data.register.loading);
         }
     };
 

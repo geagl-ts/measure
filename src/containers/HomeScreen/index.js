@@ -75,7 +75,7 @@ export default function index(props) {
         <Contenedor>
             <NuevoClienteBtn onSubmit={() => navigateTo("NuevoCliente")} />
             <SearchBar
-                placeholder="nombre"
+                placeholder="filtrar"
                 onChangeText={(value) => setSearchValue(value)}
                 value={searchValue}
             />

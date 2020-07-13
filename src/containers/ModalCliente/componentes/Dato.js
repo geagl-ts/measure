@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     },
     boton: {
         position: "absolute",
-        right: 25,
-        top: -13,
+        right: 0,
+        top: 8.8,
     },
     texto_boton: {
         fontSize: 20,
