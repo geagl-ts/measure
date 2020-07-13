@@ -83,6 +83,18 @@ const eliminarMedida = async (medidasId, eliminar, props) => {
     }
 };
 
+// Hace que se cierre el modal y vaya al formulario
+const actualizarTelefono = (props, phone, telefonoId) => {
+    const { navigate, modalState, clienteId } = props;
+    modalState[1](!modalState[0]);
+    navigate("FormularioTelefono", {
+        actualizar: true,
+        clienteId,
+        data: { phone },
+        telefonoId,
+    });
+};
+
 export default {
     cerrarModal,
     agregarTelefono,
@@ -90,4 +102,5 @@ export default {
     eliminarTelefono,
     agregarMedidas,
     eliminarMedida,
+    actualizarTelefono,
 };

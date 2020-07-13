@@ -22,6 +22,13 @@ export default function Lista(props) {
                         </Text>
                         <View style={{ ...styles.botonera }}>
                             <BotonIcono
+                                label="Actualizar"
+                                iconName="edit-3"
+                                callback={() =>
+                                    fun.actualizarTelefono(props, phone, id)
+                                }
+                            />
+                            <BotonIcono
                                 label="Eliminar"
                                 iconName="trash-2"
                                 callback={() =>

@@ -10,10 +10,15 @@ import Toast from "../../features/messageInScreen";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import fun from "./funciones";
 
 import styles, { BLACK_COLOR } from "./styles";
 
-import { NuevoTelefono, TiposDeTelefono } from "./graphql/";
+import {
+    NuevoTelefono,
+    TiposDeTelefono,
+    ACTUALIZAR_TELEFONO,
+} from "./graphql/";
 
 const NUEVO_TELEFONO = gql`
     ${NuevoTelefono}
@@ -26,37 +31,53 @@ const TIPOS_DE_TELEFONO = gql`
 import validationSchema from "./validations";
 
 export default function FormularioNuevoTelefono({ route, navigation }) {
+    const [actualizar, setActualizar] = useState(route.params.actualizar);
     const [tipo, setTipo] = useState("");
     const { clientid } = route.params;
 
     const { data, loading, error } = useQuery(TIPOS_DE_TELEFONO);
     const [addPhone] = useMutation(NUEVO_TELEFONO);
+    const [actualizarTelefono] = useMutation(ACTUALIZAR_TELEFONO);
 
     const onSubmit = async (values) => {
-        if (tipo.length === 0) {
-            Toast("Seleccione un tipo");
+        if (actualizar) {
+            fun.actualizar(
+                route.params.telefonoId,
+                values,
+                tipo,
+                actualizarTelefono,
+                navigation
+            );
         } else {
-            const datosOrganizados = {
-                phone: values.telefono,
-                phoneType: tipo,
-                client: clientid,
-            };
-
-            const { data: infoNuevoTelefono } = await addPhone({
-                variables: datosOrganizados,
-            });
-            if (!infoNuevoTelefono.addPhone.error) {
-                Toast(infoNuevoTelefono.addPhone.message);
-                navigation.navigate("AuthLoading");
+            if (tipo.length === 0) {
+                Toast("Seleccione un tipo");
             } else {
-                Toast(infoNuevoTelefono.addPhone.error);
+                const datosOrganizados = {
+                    phone: values.telefono,
+                    phoneType: tipo,
+                    client: clientid,
+                };
+
+                const { data: infoNuevoTelefono } = await addPhone({
+                    variables: datosOrganizados,
+                });
+
+                if (!infoNuevoTelefono.addPhone.error) {
+                    Toast(infoNuevoTelefono.addPhone.message);
+                    navigation.navigate("AuthLoading");
+                } else {
+                    Toast(infoNuevoTelefono.addPhone.error);
+                }
             }
         }
     };
 
+    const numero_telefono =
+        route.params.data !== undefined ? route.params.data.phone : "";
+
     const formik = useFormik({
         initialValues: {
-            telefono: "",
+            telefono: numero_telefono,
         },
         validationSchema,
         onSubmit: onSubmit,
@@ -95,7 +116,7 @@ export default function FormularioNuevoTelefono({ route, navigation }) {
                     bg={BLACK_COLOR}
                     onSubmit={formik.handleSubmit}
                     tzise={18}
-                    label="Agregar"
+                    label={!actualizar ? "Agregar" : "Actualizar"}
                 />
             </View>
         </ContenedorEstandar>
