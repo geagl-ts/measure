@@ -28,7 +28,7 @@ export default function index({ navigation: { navigate }, cliente, ...props }) {
                         <Dato label="nombre" valor={cliente.name} />
                         <Dato
                             label="Telefonos"
-                            btnLabel="Agregar"
+                            btnLabel="Nuevo"
                             callback={fun.agregarTelefono(
                                 navigate,
                                 modalState,
@@ -44,7 +44,7 @@ export default function index({ navigation: { navigate }, cliente, ...props }) {
                         </Dato>
                         <Dato
                             label="Medidas"
-                            btnLabel="Agregar"
+                            btnLabel="Nuevo"
                             callback={fun.agregarMedidas(
                                 navigate,
                                 modalState,

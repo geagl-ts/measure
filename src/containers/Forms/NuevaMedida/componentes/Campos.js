@@ -7,7 +7,7 @@ import { input } from "../../../../constants/styles";
 
 import { InputFormik, Boton, TituloCampo } from "../../../../components";
 
-export default function Campos() {
+export default function Campos(props) {
     const { submitForm } = useFormikContext();
 
     return (
@@ -27,7 +27,7 @@ export default function Campos() {
                 keyboardType="number-pad"
             />
             <Boton
-                label="Agregar"
+                label={props.actualizar ? "Actualizar" : "Agregar"}
                 onSubmit={submitForm}
                 tcolor="#ffffff"
                 tzise={18}

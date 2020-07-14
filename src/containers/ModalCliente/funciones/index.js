@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 
 import Toast from "../../../features/messageInScreen";
 
+// Funciones generales
 const cerrarModal = (modalState) => () => {
     modalState[1](!modalState[0]);
 };
@@ -11,6 +12,11 @@ const abrirModal = (modalState) => () => {
     modalState[1](true);
 };
 
+const ocultarModal = (modal) => {
+    modal[1](!modal[0]);
+};
+
+// Telefonos
 const agregarTelefono = (navigate, modalState, clientid) => () => {
     modalState[1](!modalState[0]);
     navigate("FormularioTelefono", { clientid });
@@ -41,10 +47,18 @@ const eliminarTelefono = (eliminarTelefono, data, props) => {
     }
 };
 
-const ocultarModal = (modal) => {
-    modal[1](!modal[0]);
+const actualizarTelefono = (props, phone, telefonoId) => {
+    const { navigate, modalState, clienteId } = props;
+    modalState[1](!modalState[0]);
+    navigate("FormularioTelefono", {
+        actualizar: true,
+        clienteId,
+        data: { phone },
+        telefonoId,
+    });
 };
 
+// Medidas
 const agregarMedidas = (navigate, modal, clientId) => () => {
     navigate("NuevaMedidaScreen", { clientId });
     ocultarModal(modal);
@@ -83,15 +97,13 @@ const eliminarMedida = async (medidasId, eliminar, props) => {
     }
 };
 
-// Hace que se cierre el modal y vaya al formulario
-const actualizarTelefono = (props, phone, telefonoId) => {
-    const { navigate, modalState, clienteId } = props;
-    modalState[1](!modalState[0]);
-    navigate("FormularioTelefono", {
-        actualizar: true,
-        clienteId,
-        data: { phone },
-        telefonoId,
+const actualizarMedida = (props, datos) => {
+    const { modalState, navigate, clienteId } = props;
+    ocultarModal(modalState);
+    navigate("NuevaMedidaScreen", {
+        clientId: clienteId,
+        acualizacion: true,
+        datos,
     });
 };
 
@@ -103,4 +115,5 @@ export default {
     agregarMedidas,
     eliminarMedida,
     actualizarTelefono,
+    actualizarMedida,
 };

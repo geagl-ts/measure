@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
     boton: {
         position: "absolute",
         right: 0,
-        top: 8.8,
+        top: 10.5,
     },
     texto_boton: {
-        fontSize: 20,
-        fontWeight: "400",
+        fontSize: 18,
+        fontWeight: "700",
+        textTransform: "uppercase",
     },
 });

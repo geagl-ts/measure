@@ -1,22 +1,50 @@
 import Toast from "../../../../features/messageInScreen";
 
-export default async (valores, clientId, agregarMedida, navigation) => {
+export default async (valores, variables) => {
     try {
-        const { data } = await agregarMedida({
-            variables: {
-                height: parseInt(valores.height),
-                waist: parseInt(valores.waist),
-                clientId,
-            },
-        });
+        let $variables = {
+            height: parseInt(valores.height),
+            waist: parseInt(valores.waist),
+        };
 
-        const { message, error, success } = data.addMeasure;
+        if (variables.actualizar) {
+            $variables = {
+                ...$variables,
+                medidasId: variables.medidasId,
+                clienteId: variables.clientId,
+            };
 
-        if (success) {
-            navigation.navigate("HomeNavigator");
-            Toast(message);
+            const { data } = await variables.actualizarMedida({
+                variables: $variables,
+            });
+
+            const { success, error, message } = data.updateMeasure;
+
+            if (success) {
+                Toast(message);
+                variables.navigate("HomeNavigator");
+            } else {
+                Toast(error);
+            }
         } else {
-            Toast(error);
+            $variables = {
+                ...$variables,
+                medidasId: variables.medidasId,
+                clientId: variables.clientId,
+            };
+
+            const { data } = await variables.addMeasure({
+                variables: $variables,
+            });
+
+            const { message, error, success } = data.addMeasure;
+
+            if (success) {
+                variables.navigate("HomeNavigator");
+                Toast(message);
+            } else {
+                Toast(error);
+            }
         }
     } catch (e) {
         Toast("A ocurrido un error");

@@ -23,13 +23,18 @@ export default function Lista(props) {
     return (
         <View style={{ ...styles.contenedor }}>
             <ScrollView>
-                {props.medidas.map(({ id, height, waist }) => (
-                    <View key={id} style={{ ...styles.item }}>
-                        <Informacion label="Altura" valor={height} />
-                        <Informacion label="Cintura" valor={waist} />
+                {props.medidas.map((item) => (
+                    <View key={item.id} style={{ ...styles.item }}>
+                        <Informacion label="Altura" valor={item.height} />
+                        <Informacion label="Cintura" valor={item.waist} />
                         <View style={{ ...styles.botonera }}>
                             <BotonIcono
-                                label="Eliminar"
+                                iconName="edit-3"
+                                callback={() =>
+                                    fun.actualizarMedida(props, item)
+                                }
+                            />
+                            <BotonIcono
                                 iconName="trash-2"
                                 callback={() =>
                                     fun.eliminarMedida(
