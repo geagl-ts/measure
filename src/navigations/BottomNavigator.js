@@ -8,6 +8,22 @@ const Tab = createBottomTabNavigator();
 
 const vistas = ["Home", "ListaDeClientes", "About"];
 
+const tabBarOPtions = {
+    activeTintColor: "#2ba6ff",
+    inactiveTintColor: "gray",
+    labelStyle: {
+        fontSize: 17,
+        fontWeight: "bold",
+    },
+    tabStyle: {
+        paddingTop: 6,
+    },
+};
+
+const defaultScreenOptions = {
+    unmountOnBlur: true,
+};
+
 const BottomNavigator = () => {
     return (
         <Tab.Navigator
@@ -43,22 +59,6 @@ const BottomNavigator = () => {
     );
 };
 
-const tabBarOPtions = {
-    activeTintColor: "#2ba6ff",
-    inactiveTintColor: "gray",
-    labelStyle: {
-        fontSize: 17,
-        fontWeight: "bold",
-    },
-    tabStyle: {
-        paddingTop: 6,
-    },
-};
-
-const defaultScreenOptions = {
-    unmountOnBlur: true,
-};
-
 screenOptions = ({ route }) => ({
     tabBarIcon: ({ focused, color, size }) => {
         let iconName;
@@ -78,7 +78,6 @@ screenOptions = ({ route }) => ({
                 break;
         }
 
-        // You can return any component that you like here!
         return <Ionicons name={iconName} size={size} color={color} />;
     },
 });

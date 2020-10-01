@@ -1,49 +1,26 @@
 import React, { useState } from "react";
+import { useQuery } from "@apollo/react-hooks";
 import {
     StyleSheet,
     View,
     TextInput,
     TouchableOpacity,
     Text,
+    ScrollView,
 } from "react-native";
 import * as Colors from "../constants/colors";
 import { AntDesign } from "@expo/vector-icons";
+import * as Graphql from "../Graphql";
+import * as NameScreens from "../navigations/NameScreens";
 
-const BotonBuscar = (props) => {
-    return (
-        <TextInput
-            placeholder="nombre del contacto"
-            placeholderTextColor={Colors.LIGHT_BLUE_COLOR}
-            autoCapitalize={"none"}
-            {...props}
-        />
-    );
-};
+const isSearched = (searchValue) => (item) =>
+    item.name.toLowerCase().includes(searchValue.toLowerCase());
 
-const BotonCancelarBusqueda = ({ ...rest }) => {
-    return (
-        <TouchableOpacity {...rest}>
-            <AntDesign
-                name="closecircleo"
-                size={24}
-                color={Colors.BLUE_COLOR}
-            />
-        </TouchableOpacity>
-    );
-};
-
-const Contactos = ({ contactos, ...rest }) => {
-    return (
-        <View {...rest}>
-            <Text>Clientes</Text>
-        </View>
-    );
-};
-
-export default function Mensajes({ contactos, ...rest }) {
+export default function Mensajes({ contactos, navigation, ...rest }) {
     const [values, setValues] = useState({
         nombre: "",
     });
+    const { data } = useQuery(Graphql.Query.TRAER_CLIENTES);
 
     const onChangetext = (field) => (value) => {
         setValues({ ...values, [field]: value });
@@ -55,6 +32,12 @@ export default function Mensajes({ contactos, ...rest }) {
             nombre: "",
         });
     };
+
+    if (!data) {
+        return null;
+    }
+
+    const { clients } = data.getUser.userData;
 
     return (
         <View style={{ ...styles.container }}>
@@ -74,8 +57,9 @@ export default function Mensajes({ contactos, ...rest }) {
                 </>
                 <>
                     <Contactos
-                        style={{ ...styles.vistaClientes }}
-                        contactos={contactos}
+                        contactos={clients}
+                        navigation={navigation}
+                        valorNombre={values.nombre}
                     />
                 </>
             </View>
@@ -83,39 +67,90 @@ export default function Mensajes({ contactos, ...rest }) {
     );
 }
 
+const BotonBuscar = (props) => {
+    return (
+        <TextInput
+            placeholder="nombre del contacto"
+            placeholderTextColor="#eff6fc"
+            autoCapitalize={"none"}
+            {...props}
+        />
+    );
+};
+
+const BotonCancelarBusqueda = ({ ...rest }) => {
+    return (
+        <TouchableOpacity {...rest}>
+            <AntDesign name="closecircleo" size={24} color="#eff6fc" />
+        </TouchableOpacity>
+    );
+};
+
+const Contactos = ({ contactos, navigation, valorNombre, ...rest }) => {
+    return (
+        <ScrollView {...rest}>
+            {contactos.filter(isSearched(valorNombre)).map((contacto) => {
+                return (
+                    <Contacto
+                        key={contacto.id}
+                        nombre={contacto.name}
+                        navigation={navigation}
+                    />
+                );
+            })}
+        </ScrollView>
+    );
+};
+
+const Contacto = ({ nombre, navigation, ...rest }) => {
+    const onPressButton = () => {
+        navigation.navigate(NameScreens.VISTA_MENSAJES, { cliente: nombre });
+    };
+
+    return (
+        <TouchableOpacity onPress={onPressButton}>
+            <View style={{ ...styles.contactosView }}>
+                <Text style={{ ...styles.contactosText }}>{nombre}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#feffea",
     },
     content: {
         flex: 1,
         marginTop: "5.8%",
     },
     botonBuscar: {
-        color: Colors.BLUE_COLOR,
-        backgroundColor: "#fcfcfc",
+        color: "#eff6fc",
+        backgroundColor: Colors.BLUE_COLOR,
         padding: 10,
-        margin: 14,
-        borderWidth: 2,
-        borderColor: Colors.BLUE_COLOR,
-        borderRadius: 50,
+        borderBottomWidth: 2,
+        borderBottomColor: Colors.BLUE_COLOR,
+        borderTopWidth: 2,
+        borderTopColor: Colors.BLUE_COLOR,
         fontSize: 20,
-        textAlign: "center",
         fontWeight: "bold",
     },
     cancelarBusqueda: {
         position: "absolute",
-        top: 28,
-        left: 28,
+        top: 15,
+        right: 15,
         zIndex: 1,
     },
-    vistaClientes: {
-        borderWidth: 2,
-        borderColor: Colors.BLUE_COLOR,
-        borderRadius: 5,
-        padding: 10,
-        marginHorizontal: 18,
-        height: "86%",
+    contactosView: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#e2e2e2",
+        padding: 12,
+        marginHorizontal: 10,
+    },
+    contactosText: {
+        color: Colors.BLACK,
+        fontSize: 18,
+        fontWeight: "bold",
     },
 });

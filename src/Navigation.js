@@ -1,33 +1,25 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-    AuthLoading,
-    NuevoCliente,
-    UpdateClientForm,
-    NuevoTelefono,
-    LoginRegistro,
-    NuevaMedida,
-} from "./containers";
-import BottomNavigator from "./navigations/BottomNavigator";
+import StackScreens from "./navigations/StackScreens";
 
 const Stack = createStackNavigator();
 
+const StackNavigatorProps = {
+    initialRouteName: "AuthLoading",
+    screenOptions: { headerShown: false },
+};
+
 export default () => {
     return (
-        <Stack.Navigator
-            initialRouteName="AuthLoading"
-            screenOptions={{ headerShown: false }}
-        >
-            <Stack.Screen name="AuthLoading" component={AuthLoading} />
-            <Stack.Screen name="LoginRegistro" component={LoginRegistro} />
-            <Stack.Screen name="HomeNavigator" component={BottomNavigator} />
-            <Stack.Screen name="NuevoCliente" component={NuevoCliente} />
-            <Stack.Screen name="FormularioTelefono" component={NuevoTelefono} />
-            <Stack.Screen
-                name="UpdateClientForm"
-                component={UpdateClientForm}
-            />
-            <Stack.Screen name="NuevaMedidaScreen" component={NuevaMedida} />
+        <Stack.Navigator {...StackNavigatorProps}>
+            <Stack.Screen {...StackScreens.VistaAuthLoading} />
+            <Stack.Screen {...StackScreens.VistaLoginRegistro} />
+            <Stack.Screen {...StackScreens.VistaHomeNavigator} />
+            <Stack.Screen {...StackScreens.VistaNuevoCliente} />
+            <Stack.Screen {...StackScreens.VistaNuevoTelefono} />
+            <Stack.Screen {...StackScreens.VistaActualizarCliente} />
+            <Stack.Screen {...StackScreens.VistaNuevaMedida} />
+            <Stack.Screen {...StackScreens.VistaMensajesScreen} />
         </Stack.Navigator>
     );
 };
